@@ -7,6 +7,7 @@ import "./assets/main.css";
 
 import { useUserStore } from "@/store/userStore";
 import { clearCookie } from "@/lib/cookies/cookies";
+import axios from "axios";
 
 const pinia = createPinia();
 const app = createApp(App);
@@ -32,8 +33,11 @@ const initializeApp = async () => {
       handleAuthenticationFailure();
     }
   } catch (error) {
-    console.error("Failed to fetch user data:", error);
-    handleAuthenticationFailure();
+    if (axios.isAxiosError(error) && error.response?.status === 401) {
+      handleAuthenticationFailure();
+    } else {
+      console.error("Failed to fetch user data:", error);
+    }
   }
 
   app.use(router);
