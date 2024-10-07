@@ -1,6 +1,6 @@
 import LoginView from "@/views/login/LoginView.vue";
 import SignupView from "@/views/signup/SignupView.vue";
-import HomeView from "@/views/HomeView.vue";
+import DashboardView from "@/views/dashboard/DashboardView.vue";
 
 const guestRoutes = [
   {
@@ -21,13 +21,13 @@ const authRoutes = [
   {
     path: "/",
     name: "home",
-    component: HomeView,
+    component: DashboardView,
     meta: { requiresAuth: true },
   },
   {
     path: "/test",
     name: "test",
-    component: HomeView,
+    component: DashboardView,
     meta: { requiresAuth: true },
   },
 ];

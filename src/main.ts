@@ -8,6 +8,7 @@ import "./assets/main.css";
 import { useUserStore } from "@/store/userStore";
 import { clearCookie } from "@/lib/cookies/cookies";
 import axios from "axios";
+import "@fortawesome/fontawesome-free/css/all.min.css";
 
 const pinia = createPinia();
 const app = createApp(App);
