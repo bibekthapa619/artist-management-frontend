@@ -2,9 +2,9 @@
   <aside
     class="h-screen bg-white w-64 shadow-lg md:block transition-transform duration-300 ease-in-out"
     :class="{
-      absolute: windowWidth < 768,
+      absolute: windowWidth < 1024,
       'translate-x-0': isSidebarOpen,
-      '-translate-x-64': !isSidebarOpen && windowWidth < 768,
+      '-translate-x-64': !isSidebarOpen && windowWidth < 1024,
     }"
   >
     <div class="">
@@ -14,7 +14,7 @@
         </h2>
         <button
           @click="closeSidebar"
-          class="p-4 text-gray-600 hover:text-gray-900 md:hidden"
+          class="fixed right-0 p-4 text-gray-600 hover:text-gray-900 lg:hidden"
         >
           <i class="fas fa-times"></i>
         </button>

@@ -2,7 +2,7 @@
   <nav class="bg-white shadow-md p-4 flex justify-between items-center">
     <button
       @click="toggleSidebar"
-      class="md:hidden text-gray-600 hover:bg-gray-200 rounded"
+      class="lg:hidden text-gray-600 hover:bg-gray-200 rounded"
     >
       <i class="fas fa-bars"></i>
     </button>

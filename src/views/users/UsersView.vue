@@ -4,7 +4,7 @@
 
     <!-- Table View for large screens -->
     <div class="hidden md:block">
-      <table class="min-w-full bg-white shadow-md rounded-lg overflow-hidden">
+      <table class="min-w-full bg-white shadow-md rounded-lg">
         <thead class="bg-indigo-700 text-white">
           <tr>
             <th
@@ -59,11 +59,13 @@
             <td class="px-6 py-4 border-b border-gray-200">{{ user.phone }}</td>
             <td class="px-6 py-4 border-b border-gray-200">{{ user.role }}</td>
             <td class="px-6 py-4 border-b border-gray-200">
-              <div class="relative inline-block">
+              <div
+                class="relative inline-block"
+                :id="`user-options-${user.id}`"
+              >
                 <button
                   @click="toggleOptions(user.id)"
                   class="text-gray-600 hover:text-gray-900 focus:outline-none"
-                  :id="`user-options-${user.id}`"
                 >
                   <i class="fas fa-cog"></i>
                 </button>
@@ -99,37 +101,56 @@
 
     <!-- Card View for small screens -->
     <div class="block md:hidden">
-      <div
-        v-for="(user, index) in users"
-        :key="user.id"
-        class="bg-white shadow-md rounded-lg p-4 mb-4"
-      >
-        <div class="mb-2"><strong>SN:</strong> {{ index + 1 }}</div>
-        <div class="mb-2">
-          <strong>Name:</strong> {{ user.first_name }} {{ user.last_name }}
-        </div>
-        <div class="mb-2"><strong>Email:</strong> {{ user.email }}</div>
-        <div class="mb-2"><strong>Phone:</strong> {{ user.phone }}</div>
-        <div class="mb-2"><strong>Role:</strong> {{ user.role }}</div>
-        <div class="mt-4 flex space-x-2">
-          <button
-            @click="viewUser(user)"
-            class="bg-blue-500 text-white px-4 py-2 rounded"
-          >
-            View
-          </button>
-          <button
-            @click="editUser(user)"
-            class="bg-green-500 text-white px-4 py-2 rounded"
-          >
-            Edit
-          </button>
-          <button
-            @click="deleteUser(user.id)"
-            class="bg-red-500 text-white px-4 py-2 rounded"
-          >
-            Delete
-          </button>
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+        <div
+          v-for="(user, index) in users"
+          :key="user.id"
+          class="bg-white shadow-lg rounded-lg p-6 mb-4 transition-transform transform relative"
+        >
+          <div class="flex justify-between items-center mb-4">
+            <div
+              class="absolute top-4 right-4"
+              :id="`user-options-sm-${user.id}`"
+            >
+              <button
+                @click="toggleOptions(user.id)"
+                class="text-gray-600 hover:text-gray-900 focus:outline-none"
+              >
+                <i class="fas fa-cog"></i>
+              </button>
+              <div
+                v-if="selectedUserId === user.id"
+                class="absolute right-0 w-48 mt-1 bg-white shadow-lg rounded-md z-10 border border-gray-200"
+              >
+                <div
+                  @click="viewUser(user)"
+                  class="px-4 py-2 hover:bg-gray-200 cursor-pointer"
+                >
+                  View
+                </div>
+                <div
+                  @click="editUser(user)"
+                  class="px-4 py-2 hover:bg-gray-200 cursor-pointer"
+                >
+                  Edit
+                </div>
+                <div
+                  @click="deleteUser(user.id)"
+                  class="px-4 py-2 text-red-600 hover:bg-red-100 cursor-pointer"
+                >
+                  Delete
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="mb-2">
+            <strong>Name:</strong> {{ user.first_name }} {{ user.last_name }}
+          </div>
+          <div class="mb-2"><strong>Email:</strong> {{ user.email }}</div>
+          <div class="mb-2"><strong>Phone:</strong> {{ user.phone }}</div>
+          <div class="absolute bottom-4 right-4 text-sm text-gray-500">
+            {{ user.role }}
+          </div>
         </div>
       </div>
     </div>
@@ -147,6 +168,7 @@ import Pagination from "@/components/pagination/Pagination.vue";
 import type { PaginationData, User } from "@/types/api/common";
 import { onBeforeUnmount, onMounted, ref } from "vue";
 
+const windowWidth = ref(window.innerWidth);
 const selectedUserId = ref<number | null>(null);
 const dropdownRef = ref<HTMLElement | null>(null);
 const users = ref<User[]>([]);
@@ -167,9 +189,12 @@ const toggleOptions = (userId: number) => {
 const handleClickOutside = (event: MouseEvent) => {
   const target = event.target as HTMLElement;
   if (selectedUserId.value) {
-    dropdownRef.value = document.getElementById(
-      `user-options-${selectedUserId.value}`
-    );
+    const id = `user-options-${windowWidth.value < 768 ? "sm-" : ""}${
+      selectedUserId.value
+    }`;
+    dropdownRef.value = document.getElementById(id);
+    console.log(dropdownRef.value);
+
     if (dropdownRef.value && !dropdownRef.value.contains(target)) {
       selectedUserId.value = null;
     }
@@ -181,13 +206,18 @@ const fetchUsers = async (page = 1, perPage = 2) => {
   users.value = res.data.users;
   paginationData.value = res.data.meta;
 };
+const updateWindowWidth = () => {
+  windowWidth.value = window.innerWidth;
+};
 
 onMounted(async () => {
   document.addEventListener("click", handleClickOutside);
+  window.addEventListener("resize", updateWindowWidth);
   await fetchUsers();
 });
 
 onBeforeUnmount(() => {
+  window.removeEventListener("resize", updateWindowWidth);
   document.removeEventListener("click", handleClickOutside);
 });
 
