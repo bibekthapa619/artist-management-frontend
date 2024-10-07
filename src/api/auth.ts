@@ -1,6 +1,13 @@
+import type {
+  LoginApiResponseSuccess,
+  MeApiResponseSuccess,
+} from "@/types/api/auth";
 import { apiClient } from "./client";
 
-export const login = async (email: string, password: string): Promise<any> => {
+export const login = async (
+  email: string,
+  password: string
+): Promise<LoginApiResponseSuccess> => {
   return apiClient({
     url: "/auth/login",
     method: "POST",
@@ -9,7 +16,7 @@ export const login = async (email: string, password: string): Promise<any> => {
   });
 };
 
-export const me = async (): Promise<any> => {
+export const me = async (): Promise<MeApiResponseSuccess> => {
   return apiClient({
     url: "/auth/me",
     method: "GET",
