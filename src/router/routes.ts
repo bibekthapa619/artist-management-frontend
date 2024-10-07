@@ -22,13 +22,19 @@ const authRoutes = [
     path: "/",
     name: "home",
     component: DashboardView,
-    meta: { requiresAuth: true },
+    meta: {
+      requiresAuth: true,
+      roles: ["super_admin", "artist_manager", "artist"],
+    },
   },
   {
     path: "/test",
     name: "test",
     component: DashboardView,
-    meta: { requiresAuth: true },
+    meta: {
+      requiresAuth: true,
+      roles: ["super_admin", "artist_manager", "artist"],
+    },
   },
 ];
 
