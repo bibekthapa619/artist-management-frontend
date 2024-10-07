@@ -16,3 +16,12 @@ export const me = async (): Promise<any> => {
     contentType: "application/json",
   });
 };
+
+export const signup = async (payload: any): Promise<any> => {
+  return apiClient({
+    url: "/auth/register",
+    method: "POST",
+    contentType: "application/json",
+    payload: payload,
+  });
+};

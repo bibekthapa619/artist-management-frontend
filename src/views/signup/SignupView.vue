@@ -17,6 +17,9 @@
             class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:border-blue-300"
             required
           />
+          <p v-if="fieldErrors.first_name" class="text-red-500 text-sm">
+            {{ fieldErrors.first_name }}
+          </p>
         </div>
 
         <div class="mb-4">
@@ -30,6 +33,9 @@
             class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:border-blue-300"
             required
           />
+          <p v-if="fieldErrors.last_name" class="text-red-500 text-sm">
+            {{ fieldErrors.last_name }}
+          </p>
         </div>
 
         <div class="mb-4">
@@ -43,6 +49,9 @@
             class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:border-blue-300"
             required
           />
+          <p v-if="fieldErrors.email" class="text-red-500 text-sm">
+            {{ fieldErrors.email }}
+          </p>
         </div>
 
         <div class="mb-6">
@@ -56,6 +65,9 @@
             class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:border-blue-300"
             required
           />
+          <p v-if="fieldErrors.password" class="text-red-500 text-sm">
+            {{ fieldErrors.password }}
+          </p>
         </div>
 
         <div class="text-center">
@@ -73,16 +85,15 @@
           >
         </div>
       </form>
-
-      <div v-if="errorMessage" class="mt-4 text-red-500 text-center">
-        {{ errorMessage }}
-      </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
+import { signup } from "@/api/auth";
 import { ref } from "vue";
+import { useRouter } from "vue-router";
+import { AxiosError } from "axios";
 
 const signupData = ref({
   first_name: "",
@@ -90,21 +101,61 @@ const signupData = ref({
   email: "",
   password: "",
 });
-const errorMessage = ref("");
 
-const handleSubmit = () => {
-  errorMessage.value = "";
+const fieldErrors = ref({
+  first_name: "",
+  last_name: "",
+  email: "",
+  password: "",
+});
+
+const router = useRouter();
+
+const handleSubmit = async () => {
+  fieldErrors.value = {
+    first_name: "",
+    last_name: "",
+    email: "",
+    password: "",
+  };
+
+  if (!signupData.value.first_name) {
+    fieldErrors.value.first_name = "First name is required.";
+  }
+  if (!signupData.value.last_name) {
+    fieldErrors.value.last_name = "Last name is required.";
+  }
+  if (!signupData.value.email) {
+    fieldErrors.value.email = "Email is required.";
+  } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(signupData.value.email)) {
+    fieldErrors.value.email = "Invalid email format.";
+  }
+  if (!signupData.value.password) {
+    fieldErrors.value.password = "Password is required.";
+  } else if (signupData.value.password.length < 6) {
+    fieldErrors.value.password = "Password must be at least 6 characters.";
+  }
 
   if (
-    !signupData.value.first_name ||
-    !signupData.value.last_name ||
-    !signupData.value.email ||
-    !signupData.value.password
+    fieldErrors.value.first_name ||
+    fieldErrors.value.last_name ||
+    fieldErrors.value.email ||
+    fieldErrors.value.password
   ) {
-    errorMessage.value = "All fields are required.";
     return;
   }
 
-  console.log("Signing up with", signupData.value);
+  try {
+    const res = await signup(signupData.value);
+    router.push({ name: "login" });
+  } catch (error) {
+    if (error instanceof AxiosError && error.response) {
+      const errors = error.response.data.errors || {};
+      fieldErrors.value.first_name = errors.first_name?.[0] || "";
+      fieldErrors.value.last_name = errors.last_name?.[0] || "";
+      fieldErrors.value.email = errors.email?.[0] || "";
+      fieldErrors.value.password = errors.password?.[0] || "";
+    }
+  }
 };
 </script>

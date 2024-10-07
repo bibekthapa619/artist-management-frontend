@@ -29,7 +29,9 @@
             required
           />
         </div>
-
+        <div v-if="errorMessage" class="mt-4 text-red-500 text-center">
+          {{ errorMessage }}
+        </div>
         <div class="text-center">
           <button
             type="submit"
@@ -45,10 +47,6 @@
           >
         </div>
       </form>
-
-      <div v-if="errorMessage" class="mt-4 text-red-500 text-center">
-        {{ errorMessage }}
-      </div>
     </div>
   </div>
 </template>
@@ -89,7 +87,7 @@ const handleSubmit = async () => {
     router.push({ name: "home" });
   } catch (error) {
     console.log(error);
-    // errorMessage.value = error?.response?.data?.message;
+    errorMessage.value = error?.response?.data?.message;
   }
 };
 </script>
