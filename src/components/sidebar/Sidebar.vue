@@ -22,7 +22,7 @@
           <div
             @click="navigateTo(route.path)"
             class="block px-4 py-2 text-gray-600 hover:bg-blue-500 hover:text-white cursor-pointer"
-            v-if="route.roles && route.roles.includes(user.role)"
+            v-if="user && route.roles && route.roles.includes(user.role)"
           >
             <i :class="route.icon + ' mr-2'"></i>
             {{ route.name }}

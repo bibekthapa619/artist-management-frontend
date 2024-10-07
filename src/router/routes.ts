@@ -1,6 +1,8 @@
 import LoginView from "@/views/login/LoginView.vue";
 import SignupView from "@/views/signup/SignupView.vue";
 import DashboardView from "@/views/dashboard/DashboardView.vue";
+import UsersView from "@/views/users/UsersView.vue";
+import DashboardLayout from "@/layouts/DashboardLayout.vue"; // Import the layout
 
 const guestRoutes = [
   {
@@ -20,21 +22,26 @@ const guestRoutes = [
 const authRoutes = [
   {
     path: "/",
-    name: "home",
-    component: DashboardView,
-    meta: {
-      requiresAuth: true,
-      roles: ["super_admin", "artist_manager", "artist"],
-    },
-  },
-  {
-    path: "/test",
-    name: "test",
-    component: DashboardView,
-    meta: {
-      requiresAuth: true,
-      roles: ["super_admin", "artist_manager", "artist"],
-    },
+    component: DashboardLayout,
+    meta: { requiresAuth: true },
+    children: [
+      {
+        path: "",
+        name: "home",
+        component: DashboardView,
+        meta: {
+          roles: ["super_admin", "artist_manager", "artist"],
+        },
+      },
+      {
+        path: "users",
+        name: "users.index",
+        component: UsersView,
+        meta: {
+          roles: ["super_admin", "artist_manager"],
+        },
+      },
+    ],
   },
 ];
 

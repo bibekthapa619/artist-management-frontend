@@ -1,26 +1,24 @@
 <template>
-  <DashboardLayout>
-    <div class="">
-      <div class="bg-white p-8 rounded-lg shadow-lg w-full max-w-lg">
-        <h1 class="text-3xl font-bold text-center mb-4">
-          Welcome to the Artist Management System
-        </h1>
-        <p class="text-lg text-gray-600 mb-6 text-center">
-          Hello, {{ user?.firstName }}! We're glad to have you here. Manage your
-          artists efficiently and keep track of all their information in one
-          place.
-        </p>
-        <div class="text-center">
-          <button
-            @click="handleLogout"
-            class="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 focus:outline-none focus:ring focus:border-blue-300"
-          >
-            logout
-          </button>
-        </div>
+  <div class="">
+    <div class="bg-white p-8 rounded-lg shadow-lg w-full max-w-lg">
+      <h1 class="text-3xl font-bold text-center mb-4">
+        Welcome to the Artist Management System
+      </h1>
+      <p class="text-lg text-gray-600 mb-6 text-center">
+        Hello, {{ user?.firstName }}! We're glad to have you here. Manage your
+        artists efficiently and keep track of all their information in one
+        place.
+      </p>
+      <div class="text-center">
+        <button
+          @click="handleLogout"
+          class="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 focus:outline-none focus:ring focus:border-blue-300"
+        >
+          logout
+        </button>
       </div>
     </div>
-  </DashboardLayout>
+  </div>
 </template>
 
 <script setup lang="ts">

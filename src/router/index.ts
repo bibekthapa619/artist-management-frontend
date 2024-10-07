@@ -2,7 +2,6 @@ import { createRouter, createWebHistory } from "vue-router";
 import { guestRoutes, authRoutes } from "./routes";
 import { useUserStore } from "@/store/userStore";
 import { storeToRefs } from "pinia";
-import { getCookie } from "@/lib/cookies/cookies";
 import type { Ref } from "vue";
 import type { User } from "@/types/common/common";
 
@@ -20,7 +19,6 @@ router.beforeEach((to, from, next) => {
     storeToRefs(userStore);
 
   const isAuthenticated = isLoggedIn.value;
-  // const isAuthenticated = getCookie("token") ? true : false;
 
   if (to.meta.requiresAuth && !isAuthenticated) {
     next({ name: "login" });
