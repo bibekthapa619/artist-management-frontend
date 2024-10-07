@@ -5,3 +5,5 @@ export interface User {
   email: string;
   role: string;
 }
+
+type DebounceFunc = (...args: any[]) => void;

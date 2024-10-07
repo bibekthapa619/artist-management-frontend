@@ -1,7 +1,14 @@
 <template>
-  <div class="p-4">
+  <div class="">
     <h1 class="text-2xl font-bold mb-4">Users</h1>
 
+    <input
+      type="text"
+      v-model="searchQuery"
+      @input="debouncedFetchUsers"
+      placeholder="Search users..."
+      class="border rounded p-2 mb-4"
+    />
     <!-- Table View for large screens -->
     <div class="hidden md:block">
       <table class="min-w-full bg-white shadow-md rounded-lg">
@@ -166,7 +173,8 @@
 import { getUsers } from "@/api/users";
 import Pagination from "@/components/pagination/Pagination.vue";
 import type { PaginationData, User } from "@/types/api/common";
-import { onBeforeUnmount, onMounted, ref } from "vue";
+import type { DebounceFunc } from "@/types/common/common";
+import { onBeforeUnmount, onMounted, ref, watch } from "vue";
 
 const windowWidth = ref(window.innerWidth);
 const selectedUserId = ref<number | null>(null);
@@ -193,7 +201,6 @@ const handleClickOutside = (event: MouseEvent) => {
       selectedUserId.value
     }`;
     dropdownRef.value = document.getElementById(id);
-    console.log(dropdownRef.value);
 
     if (dropdownRef.value && !dropdownRef.value.contains(target)) {
       selectedUserId.value = null;
@@ -201,11 +208,34 @@ const handleClickOutside = (event: MouseEvent) => {
   }
 };
 
-const fetchUsers = async (page = 1, perPage = 2) => {
-  let res = await getUsers(page, perPage);
+const searchQuery = ref<string>("");
+let debounceTimeout: ReturnType<typeof setTimeout> | null = null;
+
+const debounce = (func: DebounceFunc, delay: number): DebounceFunc => {
+  return (...args: any[]) => {
+    if (debounceTimeout) clearTimeout(debounceTimeout);
+    debounceTimeout = setTimeout(() => {
+      func(...args);
+    }, delay);
+  };
+};
+
+const fetchUsers = async (page = 1, perPage = 10, query = "") => {
+  let res = await getUsers(page, perPage, query);
   users.value = res.data.users;
   paginationData.value = res.data.meta;
 };
+
+const debouncedFetchUsers = debounce(() => {
+  fetchUsers(
+    paginationData.value.current_page,
+    paginationData.value.page_size,
+    searchQuery.value
+  );
+}, 300);
+
+watch(searchQuery, debouncedFetchUsers);
+
 const updateWindowWidth = () => {
   windowWidth.value = window.innerWidth;
 };
