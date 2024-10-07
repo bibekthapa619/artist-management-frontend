@@ -4,7 +4,7 @@
       <h2 class="text-2xl font-semibold text-center mb-6">Login</h2>
 
       <form @submit.prevent="handleSubmit">
-        <div class="mb-4">
+        <div class="">
           <label for="email" class="block text-sm font-medium text-gray-700"
             >Email</label
           >
@@ -17,7 +17,7 @@
           />
         </div>
 
-        <div class="mb-6">
+        <div class="mt-4">
           <label for="password" class="block text-sm font-medium text-gray-700"
             >Password</label
           >
@@ -29,15 +29,23 @@
             required
           />
         </div>
-        <div v-if="errorMessage" class="mt-4 text-red-500 text-center">
+        <div v-if="errorMessage" class="mt-2 text-red-500 text-center">
           {{ errorMessage }}
         </div>
-        <div class="text-center">
+        <div class="text-center mt-4">
           <button
             type="submit"
             class="w-full bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 focus:outline-none focus:ring focus:border-blue-300 transition duration-200 ease-in-out"
+            :disabled="isLoading"
           >
-            Login
+            <span
+              v-if="isLoading"
+              class="animate-spin inline-block w-4 h-4 border-2 border-white border-t-transparent rounded-full mr-2"
+              role="status"
+              aria-hidden="true"
+            ></span>
+            <span v-if="!isLoading">Login</span>
+            <span v-if="isLoading">Loading...</span>
           </button>
         </div>
 
@@ -57,20 +65,22 @@ import { login } from "@/api/auth";
 import { useUserStore } from "@/store/userStore";
 import { setCookie } from "@/lib/cookies/cookies";
 import { useRouter } from "vue-router";
+import { AxiosError } from "axios";
 
 const email = ref("");
 const password = ref("");
 const errorMessage = ref("");
+const isLoading = ref(false);
 const userStore = useUserStore();
 const router = useRouter();
 
 const handleSubmit = async () => {
   errorMessage.value = "";
-
   if (!email.value || !password.value) {
     errorMessage.value = "Email and Password are required.";
     return;
   }
+  isLoading.value = true;
 
   try {
     const res = await login(email.value, password.value);
@@ -87,7 +97,11 @@ const handleSubmit = async () => {
     router.push({ name: "home" });
   } catch (error) {
     console.log(error);
-    errorMessage.value = error?.response?.data?.message;
+    if (error instanceof AxiosError && error.response) {
+      errorMessage.value = error?.response?.data?.message;
+    }
+  } finally {
+    isLoading.value = false;
   }
 };
 </script>

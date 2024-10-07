@@ -74,8 +74,16 @@
           <button
             type="submit"
             class="w-full bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 focus:outline-none focus:ring focus:border-blue-300 transition duration-200 ease-in-out"
+            :disabled="isLoading"
           >
-            Signup
+            <span
+              v-if="isLoading"
+              class="animate-spin inline-block w-4 h-4 border-2 border-white border-t-transparent rounded-full mr-2"
+              role="status"
+              aria-hidden="true"
+            ></span>
+            <span v-if="!isLoading">Signup</span>
+            <span v-if="isLoading">Loading...</span>
           </button>
         </div>
 
@@ -108,6 +116,7 @@ const fieldErrors = ref({
   email: "",
   password: "",
 });
+const isLoading = ref(false);
 
 const router = useRouter();
 
@@ -144,7 +153,7 @@ const handleSubmit = async () => {
   ) {
     return;
   }
-
+  isLoading.value = true;
   try {
     const res = await signup(signupData.value);
     router.push({ name: "login" });
@@ -156,6 +165,8 @@ const handleSubmit = async () => {
       fieldErrors.value.email = errors.email?.[0] || "";
       fieldErrors.value.password = errors.password?.[0] || "";
     }
+  } finally {
+    isLoading.value = false;
   }
 };
 </script>
