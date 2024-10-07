@@ -98,26 +98,25 @@
 </template>
 
 <script setup lang="ts">
-import { signup } from "@/api/auth";
 import { ref } from "vue";
 import { useRouter } from "vue-router";
+import { signup } from "@/api/auth";
 import { AxiosError } from "axios";
 
-const signupData = ref({
+const signupData = ref<SignupData>({
   first_name: "",
   last_name: "",
   email: "",
   password: "",
 });
 
-const fieldErrors = ref({
+const fieldErrors = ref<FieldErrors>({
   first_name: "",
   last_name: "",
   email: "",
   password: "",
 });
-const isLoading = ref(false);
-
+const isLoading = ref<boolean>(false);
 const router = useRouter();
 
 const handleSubmit = async () => {
@@ -153,7 +152,9 @@ const handleSubmit = async () => {
   ) {
     return;
   }
+
   isLoading.value = true;
+
   try {
     const res = await signup(signupData.value);
     router.push({ name: "login" });

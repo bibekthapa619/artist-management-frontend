@@ -2,13 +2,13 @@
   <nav class="bg-white shadow-md p-4 flex justify-between items-center">
     <button
       @click="toggleSidebar"
-      class="md:hidden p-2 text-gray-600 hover:bg-gray-200 rounded"
+      class="md:hidden text-gray-600 hover:bg-gray-200 rounded"
     >
       <i class="fas fa-bars"></i>
     </button>
     <div class="ml-auto relative" @click="toggleDropdown">
       <span class="text-gray-600 font-medium cursor-pointer">
-        {{ user.firstName }} <i class="fas fa-caret-down"></i>
+        {{ user?.firstName }} <i class="fas fa-caret-down"></i>
       </span>
 
       <div
@@ -32,20 +32,21 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref, type Ref } from "vue";
 import { useUserStore } from "@/store/userStore";
 import { clearCookie } from "@/lib/cookies/cookies";
 import { useRouter } from "vue-router";
 import { storeToRefs } from "pinia";
+import type { User } from "@/types/common/common";
 
-const props = defineProps<{
+const { toggleSidebar } = defineProps<{
   toggleSidebar: () => void;
 }>();
 
 const router = useRouter();
 
 const userStore = useUserStore();
-const { user } = storeToRefs(userStore);
+const { user }: { user: Ref<User | null> } = storeToRefs(userStore);
 
 const isDropdownOpen = ref(false);
 

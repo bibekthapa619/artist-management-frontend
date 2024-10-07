@@ -66,15 +66,16 @@ import { useUserStore } from "@/store/userStore";
 import { setCookie } from "@/lib/cookies/cookies";
 import { useRouter } from "vue-router";
 import { AxiosError } from "axios";
+import type { LoginApiResponseSuccess } from "@/types/api/auth";
 
-const email = ref("");
-const password = ref("");
-const errorMessage = ref("");
-const isLoading = ref(false);
+const email = ref<string>("");
+const password = ref<string>("");
+const errorMessage = ref<string>("");
+const isLoading = ref<boolean>(false);
 const userStore = useUserStore();
 const router = useRouter();
 
-const handleSubmit = async () => {
+const handleSubmit = async (): Promise<void> => {
   errorMessage.value = "";
   if (!email.value || !password.value) {
     errorMessage.value = "Email and Password are required.";
@@ -83,7 +84,10 @@ const handleSubmit = async () => {
   isLoading.value = true;
 
   try {
-    const res = await login(email.value, password.value);
+    const res: LoginApiResponseSuccess = await login(
+      email.value,
+      password.value
+    );
 
     userStore.setUser({
       email: res.data.user.email,

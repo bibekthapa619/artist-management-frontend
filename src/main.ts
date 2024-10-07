@@ -9,6 +9,7 @@ import { useUserStore } from "@/store/userStore";
 import { clearCookie } from "@/lib/cookies/cookies";
 import axios from "axios";
 import "@fortawesome/fontawesome-free/css/all.min.css";
+import type { MeApiResponseSuccess } from "./types/api/auth";
 
 const pinia = createPinia();
 const app = createApp(App);
@@ -19,7 +20,7 @@ const initializeApp = async () => {
   const userStore = useUserStore();
 
   try {
-    const response = await me();
+    const response: MeApiResponseSuccess = await me();
     const userData = response.data;
 
     if (userData) {

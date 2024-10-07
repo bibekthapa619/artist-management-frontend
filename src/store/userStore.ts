@@ -1,30 +1,14 @@
-import { getCookie } from "@/lib/cookies/cookies";
+import type { User } from "@/types/common/common";
+import type { UserState } from "@/types/store/user";
 import { defineStore } from "pinia";
-
-interface UserState {
-  user: {
-    id: number;
-    firstName: string;
-    lastName: string;
-    email: string;
-    role: string;
-  } | null;
-  isLoggedIn: boolean;
-}
 
 export const useUserStore = defineStore("user", {
   state: (): UserState => ({
-    user: null,
+    user: {} as User | null,
     isLoggedIn: false,
   }),
   actions: {
-    setUser(userData: {
-      firstName: string;
-      lastName: string;
-      email: string;
-      id: number;
-      role: string;
-    }) {
+    setUser(userData: User) {
       this.user = userData;
       this.isLoggedIn = true;
     },

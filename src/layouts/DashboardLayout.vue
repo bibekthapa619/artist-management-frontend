@@ -17,11 +17,11 @@ import { ref } from "vue";
 
 const isSidebarOpen = ref(false);
 
-const toggleSidebar = () => {
+const toggleSidebar = (): void => {
   isSidebarOpen.value = !isSidebarOpen.value;
 };
 
-const closeSidebar = () => {
+const closeSidebar = (): void => {
   isSidebarOpen.value = false;
 };
 </script>
