@@ -47,6 +47,7 @@
         <td
           class="px-6 py-4 border-b border-gray-200"
           v-if="options && options.length > 0"
+          :id="`table-options-${row.id}`"
         >
           <div class="relative inline-block">
             <button
@@ -69,7 +70,7 @@
 </template>
 
 <script lang="ts" setup>
-import { defineProps, ref, type Ref } from "vue";
+import { defineProps, onBeforeUnmount, onMounted, ref, type Ref } from "vue";
 import type { TableProps } from "./table";
 import TableOptions from "./TableOptions.vue";
 
@@ -77,6 +78,19 @@ const { headers, rows, options, paginationData } =
   defineProps<TableProps<Record<string, any>>>();
 
 const selectedId: Ref = ref(null);
+const dropdownRef = ref<HTMLElement | null>(null);
+
+const handleClickOutside = (event: MouseEvent) => {
+  const target = event.target as HTMLElement;
+  if (selectedId.value) {
+    const id = `table-options-${selectedId.value}`;
+    dropdownRef.value = document.getElementById(id);
+
+    if (dropdownRef.value && !dropdownRef.value.contains(target)) {
+      selectedId.value = null;
+    }
+  }
+};
 
 const toggleOptions = (id: number) => {
   if (!selectedId.value || selectedId.value !== id) {
@@ -86,4 +100,12 @@ const toggleOptions = (id: number) => {
 
   selectedId.value = null;
 };
+
+onMounted(() => {
+  document.addEventListener("click", handleClickOutside);
+});
+
+onBeforeUnmount(() => {
+  document.removeEventListener("click", handleClickOutside);
+});
 </script>
