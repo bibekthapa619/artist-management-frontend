@@ -10,6 +10,7 @@
       :viewUser="viewUser"
       :editUser="editUser"
       :deleteUser="deleteUser"
+      :options="options"
     />
 
     <UserCard
@@ -18,6 +19,7 @@
       :viewUser="viewUser"
       :editUser="editUser"
       :deleteUser="deleteUser"
+      :options="options"
     />
 
     <Pagination
@@ -35,6 +37,7 @@ import type { PaginationData, User } from "@/types/api/common";
 import SearchInput from "@/components/search/SearchInput.vue";
 import UserCard from "@/sections/users/UserCard.vue";
 import UserTable from "@/sections/users/UserTable.vue";
+import type { TableOption } from "@/components/table/table";
 
 const users = ref<User[]>([]);
 const paginationData = ref<PaginationData>({
@@ -46,6 +49,34 @@ const paginationData = ref<PaginationData>({
   page_size: 0,
 });
 const searchQuery = ref<string>("");
+
+const viewUser = (user: User) => {
+  console.log("View user:", user);
+};
+
+const editUser = (user: User) => {
+  console.log("Edit user:", user);
+};
+
+const deleteUser = (id: number) => {
+  console.log("Delete user with id:", id);
+};
+
+const options: TableOption[] = [
+  {
+    title: "View",
+    action: viewUser,
+  },
+  {
+    title: "Edit",
+    action: editUser,
+  },
+  {
+    title: "Delete",
+    action: deleteUser,
+    isDanger: true,
+  },
+];
 
 const fetchUsers = async (page = 1, perPage = 10, query = "") => {
   let res = await getUsers(page, perPage, query);
@@ -63,17 +94,5 @@ onMounted(async () => {
 
 const updateCurrentPage = async (page: number) => {
   await fetchUsers(page);
-};
-
-const viewUser = (user: User) => {
-  console.log("View user:", user);
-};
-
-const editUser = (user: User) => {
-  console.log("Edit user:", user);
-};
-
-const deleteUser = (id: number) => {
-  console.log("Delete user with id:", id);
 };
 </script>

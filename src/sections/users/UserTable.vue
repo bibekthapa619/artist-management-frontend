@@ -15,13 +15,15 @@ import type { PaginationData, User } from "@/types/api/common";
 import type { TableHeaderType, TableOption } from "@/components/table/table";
 import Table from "@/components/table/Table.vue";
 
-const { users, paginationData, viewUser, editUser, deleteUser } = defineProps<{
-  users: User[];
-  paginationData: PaginationData;
-  viewUser: (user: User) => void;
-  editUser: (user: User) => void;
-  deleteUser: (id: number) => void;
-}>();
+const { users, paginationData, viewUser, editUser, deleteUser, options } =
+  defineProps<{
+    users: User[];
+    paginationData: PaginationData;
+    viewUser: (user: User) => void;
+    editUser: (user: User) => void;
+    deleteUser: (id: number) => void;
+    options?: TableOption[];
+  }>();
 
 const headers: TableHeaderType[] = [
   {
@@ -51,20 +53,4 @@ const formattedUsers = computed(() =>
     role: user.role,
   }))
 );
-
-const options: TableOption[] = [
-  {
-    title: "View",
-    action: viewUser,
-  },
-  {
-    title: "Edit",
-    action: editUser,
-  },
-  {
-    title: "Delete",
-    action: deleteUser,
-    isDanger: true,
-  },
-];
 </script>
