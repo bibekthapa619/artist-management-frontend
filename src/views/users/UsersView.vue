@@ -31,10 +31,10 @@
 import { ref, onMounted, onBeforeUnmount, watch } from "vue";
 import { getUsers } from "@/api/users";
 import Pagination from "@/components/pagination/Pagination.vue";
-import UserTable from "@/components/user/UserTable.vue";
-import UserCard from "@/components/user/UserCard.vue";
 import type { PaginationData, User } from "@/types/api/common";
 import SearchInput from "@/components/search/SearchInput.vue";
+import UserCard from "@/sections/users/UserCard.vue";
+import UserTable from "@/sections/users/UserTable.vue";
 
 const users = ref<User[]>([]);
 const paginationData = ref<PaginationData>({
