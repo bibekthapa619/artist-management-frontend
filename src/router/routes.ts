@@ -3,6 +3,7 @@ import SignupView from "@/views/signup/SignupView.vue";
 import DashboardView from "@/views/dashboard/DashboardView.vue";
 import UsersView from "@/views/users/UsersView.vue";
 import DashboardLayout from "@/layouts/DashboardLayout.vue"; // Import the layout
+import UserCreateView from "@/views/users/UserCreateView.vue";
 
 const guestRoutes = [
   {
@@ -38,7 +39,15 @@ const authRoutes = [
         name: "users.index",
         component: UsersView,
         meta: {
-          roles: ["super_admin", "artist_manager"],
+          roles: ["super_admin"],
+        },
+      },
+      {
+        path: "users/create",
+        name: "users.create",
+        component: UserCreateView,
+        meta: {
+          roles: ["super_admin"],
         },
       },
     ],

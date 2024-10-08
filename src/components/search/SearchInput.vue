@@ -4,7 +4,7 @@
     v-model="searchQuery"
     @input="debouncedSearch"
     placeholder="Search users..."
-    class="border rounded p-2 mb-4"
+    class="border rounded p-2"
   />
 </template>
 

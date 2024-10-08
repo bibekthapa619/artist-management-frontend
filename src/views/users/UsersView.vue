@@ -2,7 +2,15 @@
   <div class="">
     <h1 class="text-2xl font-bold mb-4">Users</h1>
 
-    <SearchInput v-model:searchQuery="searchQuery" />
+    <div class="flex justify-between items-center mb-4 space-x-4">
+      <router-link
+        to="/users/create"
+        class="bg-indigo-700 text-white px-4 py-2 h-10 rounded-lg shadow hover:bg-indigo-800 flex items-center justify-center"
+      >
+        Create
+      </router-link>
+      <SearchInput v-model:searchQuery="searchQuery" />
+    </div>
 
     <UserTable
       :users="users"
