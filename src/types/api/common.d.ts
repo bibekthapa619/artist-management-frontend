@@ -20,7 +20,8 @@ export interface Artist {
   user_id?: number;
   name: string;
   no_of_albums_released: number;
-  first_released_year: number;
+  first_release_year: number;
+  music_count?: number;
 }
 export interface PaginationData {
   current_page: number;

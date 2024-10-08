@@ -3,12 +3,43 @@
     <h1 class="text-2xl font-bold mb-4">Artists</h1>
 
     <div class="flex justify-between items-center mb-4 space-x-4">
-      <router-link
-        to="/artists/create"
-        class="bg-indigo-700 text-white px-4 py-2 h-10 rounded-lg shadow hover:bg-indigo-800 flex items-center justify-center"
+      <div
+        class="relative inline-block text-left"
+        @click="toggleDropdown"
+        id="options-dropdown"
       >
-        Create
-      </router-link>
+        <button
+          class="bg-indigo-700 text-white px-4 py-2 h-10 rounded-lg shadow hover:bg-indigo-800 flex items-center justify-center"
+        >
+          Options <i class="fas fa-caret-down ml-2"></i>
+        </button>
+
+        <div
+          v-if="isDropdownOpen"
+          class="absolute left-0 mt-2 w-48 bg-white border border-gray-200 rounded-lg shadow-lg z-10"
+        >
+          <router-link
+            to="/artists/create"
+            class="block px-4 py-2 text-gray-800 hover:bg-indigo-700 hover:text-white"
+          >
+            Create
+          </router-link>
+          <a
+            href="#"
+            @click.prevent="handleOptionClick('import')"
+            class="block px-4 py-2 text-gray-800 hover:bg-indigo-700 hover:text-white"
+          >
+            Import
+          </a>
+          <a
+            href="#"
+            @click.prevent="handleOptionClick('export')"
+            class="block px-4 py-2 text-gray-800 hover:bg-indigo-700 hover:text-white"
+          >
+            Export
+          </a>
+        </div>
+      </div>
       <SearchInput
         v-model:searchQuery="searchQuery"
         class="w-48 sm:w-64"
@@ -26,7 +57,9 @@
         :options="options"
       />
     </div>
-
+    <div class="block md:hidden">
+      <ArtistCard v-if="artists.length" :artists="artists" :options="options" />
+    </div>
     <Pagination
       :pagination="paginationData"
       :updateCurrentPage="updateCurrentPage"
@@ -35,7 +68,7 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, onMounted, watch } from "vue";
+import { ref, onMounted, watch, onBeforeUnmount } from "vue";
 import { deleteArtistById, getArtists } from "@/api/artists";
 import Pagination from "@/components/pagination/Pagination.vue";
 import type { PaginationData, Artist } from "@/types/api/common";
@@ -43,6 +76,7 @@ import SearchInput from "@/components/search/SearchInput.vue";
 import ArtistTable from "@/sections/artists/ArtistTable.vue";
 import type { TableOption } from "@/components/table/table";
 import { useRouter } from "vue-router";
+import ArtistCard from "@/sections/artists/ArtistCard.vue";
 
 const artists = ref<Artist[]>([]);
 const pageSize = ref<number>(10);
@@ -57,6 +91,7 @@ const paginationData = ref<PaginationData>({
 const searchQuery = ref<string>("");
 const refresh = ref<boolean>(false);
 const router = useRouter();
+const isDropdownOpen = ref(false);
 
 const viewArtist = (artist: Artist) => {
   router.push({
@@ -112,8 +147,29 @@ watch(refresh, () => {
   fetchArtists(1, pageSize.value);
 });
 
+const toggleDropdown = () => {
+  isDropdownOpen.value = !isDropdownOpen.value;
+};
+
+const handleOptionClick = (option: string) => {
+  console.log(`Selected option: ${option}`);
+  isDropdownOpen.value = false;
+};
+
 onMounted(async () => {
+  document.addEventListener("click", handleClickOutside);
   await fetchArtists();
+});
+
+const handleClickOutside = (event: MouseEvent) => {
+  const dropdown = document.getElementById("options-dropdown");
+  if (dropdown && !dropdown.contains(event.target as Node)) {
+    isDropdownOpen.value = false;
+  }
+};
+
+onBeforeUnmount(() => {
+  document.removeEventListener("click", handleClickOutside);
 });
 
 const updateCurrentPage = async (page: number) => {
