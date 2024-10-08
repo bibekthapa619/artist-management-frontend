@@ -4,6 +4,7 @@ import DashboardView from "@/views/dashboard/DashboardView.vue";
 import UsersView from "@/views/users/UsersView.vue";
 import DashboardLayout from "@/layouts/DashboardLayout.vue"; // Import the layout
 import UserCreateView from "@/views/users/UserCreateView.vue";
+import UserEditView from "@/views/users/UserEditView.vue";
 
 const guestRoutes = [
   {
@@ -46,6 +47,14 @@ const authRoutes = [
         path: "users/create",
         name: "users.create",
         component: UserCreateView,
+        meta: {
+          roles: ["super_admin"],
+        },
+      },
+      {
+        path: "users/:id",
+        name: "users.edit",
+        component: UserEditView,
         meta: {
           roles: ["super_admin"],
         },

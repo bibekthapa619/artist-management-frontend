@@ -5,9 +5,9 @@
         >Users</router-link
       >
       <span class="mx-2">/</span>
-      <span>Create</span>
+      <span>Edit</span>
     </nav>
-    <h1 class="text-2xl font-bold mb-4">Create User</h1>
+    <h1 class="text-2xl font-bold mb-4">Edit User</h1>
 
     <div class="bg-white shadow-md rounded-lg p-6">
       <form @submit.prevent="submitForm">
@@ -19,8 +19,9 @@
               <label
                 for="first_name"
                 class="block text-sm font-medium text-gray-700"
-                >First Name <span class="text-red-500">*</span></label
               >
+                First Name <span class="text-red-500">*</span>
+              </label>
               <input
                 id="first_name"
                 v-model="userDetails.first_name"
@@ -33,12 +34,14 @@
                 errors.first_name
               }}</span>
             </div>
+
             <div class="mb-4">
               <label
                 for="last_name"
                 class="block text-sm font-medium text-gray-700"
-                >Last Name <span class="text-red-500">*</span></label
               >
+                Last Name <span class="text-red-500">*</span>
+              </label>
               <input
                 id="last_name"
                 v-model="userDetails.last_name"
@@ -53,9 +56,9 @@
             </div>
 
             <div class="mb-4">
-              <label for="dob" class="block text-sm font-medium text-gray-700"
-                >Date of Birth <span class="text-red-500">*</span></label
-              >
+              <label for="dob" class="block text-sm font-medium text-gray-700">
+                Date of Birth <span class="text-red-500">*</span>
+              </label>
               <input
                 id="dob"
                 v-model="userDetails.dob"
@@ -70,12 +73,13 @@
             </div>
 
             <div class="mb-4">
-              <label class="block text-sm font-medium text-gray-700"
+              <label
+                for="gender"
+                class="block text-sm font-medium text-gray-700"
                 >Gender <span class="text-red-500">*</span></label
               >
               <select
                 v-model="userDetails.gender"
-                @change="validateField('gender')"
                 class="mt-1 block w-full p-2 border rounded-md"
                 :class="{ 'border-red-500': errors.gender }"
                 required
@@ -94,8 +98,9 @@
               <label
                 for="address"
                 class="block text-sm font-medium text-gray-700"
-                >Address <span class="text-red-500">*</span></label
               >
+                Address <span class="text-red-500">*</span>
+              </label>
               <input
                 id="address"
                 v-model="userDetails.address"
@@ -110,9 +115,12 @@
             </div>
 
             <div class="mb-4">
-              <label for="phone" class="block text-sm font-medium text-gray-700"
-                >Phone <span class="text-red-500">*</span></label
+              <label
+                for="phone"
+                class="block text-sm font-medium text-gray-700"
               >
+                Phone <span class="text-red-500">*</span>
+              </label>
               <input
                 id="phone"
                 v-model="userDetails.phone"
@@ -125,105 +133,82 @@
                 errors.phone
               }}</span>
             </div>
+          </div>
+        </div>
+        <div v-if="userDetails.role === 'artist'" class="mt-6">
+          <h2 class="text-xl font-semibold mb-4">Artist Details</h2>
 
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div class="mb-4">
-              <label for="role" class="block text-sm font-medium text-gray-700"
-                >Role <span class="text-red-500">*</span></label
+              <label
+                for="artist_name"
+                class="block text-sm font-medium text-gray-700"
+                >Artist Name <span class="text-red-500">*</span></label
               >
-              <select
-                id="role"
-                v-model="userDetails.role"
-                @change="validateField('role')"
+              <input
+                id="artist_name"
+                v-model="artistDetails.name"
+                type="text"
                 class="mt-1 block w-full p-2 border rounded-md"
-                :class="{ 'border-red-500': errors.role }"
+                :class="{ 'border-red-500': errors.name }"
                 required
-              >
-                <option value="" disabled>Select a role</option>
-                <option value="artist_manager">Artist Manager</option>
-                <option value="artist">Artist</option>
-              </select>
-              <span v-if="errors.role" class="text-red-500 text-xs">{{
-                errors.role
+              />
+              <span v-if="errors.name" class="text-red-500 text-xs">{{
+                errors.name
               }}</span>
             </div>
-          </div>
 
-          <div v-if="userDetails.role === 'artist'" class="mt-6">
-            <h2 class="text-xl font-semibold mb-4">Artist Details</h2>
+            <div class="mb-4">
+              <label
+                for="first_release_year"
+                class="block text-sm font-medium text-gray-700"
+                >First Release Year <span class="text-red-500">*</span></label
+              >
+              <input
+                id="first_release_year"
+                v-model="artistDetails.first_release_year"
+                type="number"
+                class="mt-1 block w-full p-2 border rounded-md"
+                :class="{ 'border-red-500': errors.first_release_year }"
+                required
+              />
+              <span
+                v-if="errors.first_release_year"
+                class="text-red-500 text-xs"
+                >{{ errors.first_release_year }}</span
+              >
+            </div>
 
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div class="mb-4">
-                <label
-                  for="artist_name"
-                  class="block text-sm font-medium text-gray-700"
-                  >Artist Name <span class="text-red-500">*</span></label
-                >
-                <input
-                  id="artist_name"
-                  v-model="artistDetails.name"
-                  type="text"
-                  class="mt-1 block w-full p-2 border rounded-md"
-                  :class="{ 'border-red-500': errors.name }"
-                  required
-                />
-                <span v-if="errors.name" class="text-red-500 text-xs">{{
-                  errors.name
-                }}</span>
-              </div>
-
-              <div class="mb-4">
-                <label
-                  for="first_release_year"
-                  class="block text-sm font-medium text-gray-700"
-                  >First Release Year <span class="text-red-500">*</span></label
-                >
-                <input
-                  id="first_release_year"
-                  v-model="artistDetails.first_release_year"
-                  type="number"
-                  class="mt-1 block w-full p-2 border rounded-md"
-                  :class="{ 'border-red-500': errors.first_release_year }"
-                  required
-                />
-                <span
-                  v-if="errors.first_release_year"
-                  class="text-red-500 text-xs"
-                  >{{ errors.first_release_year }}</span
-                >
-              </div>
-
-              <div class="mb-4">
-                <label
-                  for="no_of_albums_released"
-                  class="block text-sm font-medium text-gray-700"
-                  >Number of Albums Released
-                  <span class="text-red-500">*</span></label
-                >
-                <input
-                  id="no_of_albums_released"
-                  v-model="artistDetails.no_of_albums_released"
-                  type="number"
-                  class="mt-1 block w-full p-2 border rounded-md"
-                  :class="{ 'border-red-500': errors.no_of_albums_released }"
-                  required
-                />
-                <span
-                  v-if="errors.no_of_albums_released"
-                  class="text-red-500 text-xs"
-                  >{{ errors.no_of_albums_released }}</span
-                >
-              </div>
+            <div class="mb-4">
+              <label
+                for="no_of_albums_released"
+                class="block text-sm font-medium text-gray-700"
+                >Number of Albums Released
+                <span class="text-red-500">*</span></label
+              >
+              <input
+                id="no_of_albums_released"
+                v-model="artistDetails.no_of_albums_released"
+                type="number"
+                class="mt-1 block w-full p-2 border rounded-md"
+                :class="{ 'border-red-500': errors.no_of_albums_released }"
+                required
+              />
+              <span
+                v-if="errors.no_of_albums_released"
+                class="text-red-500 text-xs"
+                >{{ errors.no_of_albums_released }}</span
+              >
             </div>
           </div>
         </div>
-
         <div class="mb-6">
           <h2 class="text-xl font-semibold mb-4">Login Details</h2>
 
           <div class="mb-4">
-            <label for="email" class="block text-sm font-medium text-gray-700"
-              >Email <span class="text-red-500">*</span></label
-            >
+            <label for="email" class="block text-sm font-medium text-gray-700">
+              Email <span class="text-red-500">*</span>
+            </label>
             <input
               id="email"
               v-model="userDetails.email"
@@ -236,25 +221,6 @@
               errors.email
             }}</span>
           </div>
-
-          <div class="mb-4">
-            <label
-              for="password"
-              class="block text-sm font-medium text-gray-700"
-              >Password <span class="text-red-500">*</span></label
-            >
-            <input
-              id="password"
-              v-model="userDetails.password"
-              type="password"
-              class="mt-1 block w-full p-2 border rounded-md"
-              :class="{ 'border-red-500': errors.password }"
-              required
-            />
-            <span v-if="errors.password" class="text-red-500 text-xs">{{
-              errors.password
-            }}</span>
-          </div>
         </div>
 
         <button
@@ -262,7 +228,7 @@
           :disabled="loading"
           class="bg-indigo-700 text-white px-4 py-2 rounded-lg shadow hover:bg-indigo-800 transition duration-300"
         >
-          <span v-if="loading">Creating...</span>
+          <span v-if="loading">Updating...</span>
           <span v-else>Save</span>
         </button>
       </form>
@@ -271,42 +237,56 @@
 </template>
 
 <script lang="ts" setup>
-import { createArtist } from "@/api/artists";
-import { createUser } from "@/api/users";
+import { onMounted, ref } from "vue";
+import { useRoute, useRouter } from "vue-router";
+import { updateUser, getUserById } from "@/api/users";
 import type { ArtistFields, UserFields } from "@/types/api/users";
 import { AxiosError } from "axios";
-import { ref } from "vue";
-import { useRouter } from "vue-router";
+import { updateArtist } from "@/api/artists";
 
 const userDetails = ref<UserFields>({
+  id: 0,
   first_name: "",
   last_name: "",
   dob: "",
   gender: "",
   address: "",
   phone: "",
-  role: "",
   email: "",
-  password: "",
+  role: "",
 });
 
 const artistDetails = ref<ArtistFields>({
+  id: 0,
   name: "",
   first_release_year: undefined,
   no_of_albums_released: undefined,
+});
+
+const route = useRoute();
+const userId: string | string[] = route.params.id;
+
+onMounted(async () => {
+  loading.value = true;
+  try {
+    const res = await getUserById(userId as string);
+    userDetails.value = res.data.user;
+    if (res.data.user.role === "artist") {
+      artistDetails.value = res.data.artist;
+    }
+  } catch (error) {
+    console.error(error);
+  } finally {
+    loading.value = false;
+  }
 });
 
 const errors = ref<{ [key: string]: string }>({});
 const loading = ref(false);
 const router = useRouter();
 
-function validateField(field: keyof UserFields | keyof ArtistFields) {
-  errors.value = {};
-  const value =
-    field in userDetails.value
-      ? userDetails.value[field as keyof UserFields]
-      : artistDetails.value[field as keyof ArtistFields];
-
+function validateField(field: keyof UserFields) {
+  const value = userDetails.value[field];
   if (!value) {
     errors.value[field] = "This field is required.";
   } else {
@@ -319,12 +299,6 @@ const submitForm = async () => {
     validateField(key as keyof UserFields);
   }
 
-  if (userDetails.value.role === "artist") {
-    for (const key in artistDetails.value) {
-      validateField(key as keyof ArtistFields);
-    }
-  }
-
   if (Object.keys(errors.value).length > 0) {
     return;
   }
@@ -332,11 +306,11 @@ const submitForm = async () => {
   loading.value = true;
   try {
     if (userDetails.value.role === "artist_manager") {
-      await createUser({
+      await updateUser(userId as string, {
         user: userDetails.value,
       });
-    } else if (userDetails.value.role === "artist") {
-      await createArtist({
+    } else {
+      await updateArtist(artistDetails.value.id as number, {
         user: userDetails.value,
         artist: artistDetails.value,
       });
@@ -354,13 +328,7 @@ const submitForm = async () => {
         gender: fieldErrors?.gender?.[0] || "",
         address: fieldErrors?.address?.[0] || "",
         phone: fieldErrors?.phone?.[0] || "",
-        role: fieldErrors?.role?.[0] || "",
         email: fieldErrors?.email?.[0] || "",
-        password: fieldErrors?.password?.[0] || "",
-
-        artist_name: fieldErrors?.name?.[0] || "",
-        first_release_year: fieldErrors?.first_release_year?.[0] || "",
-        no_of_albums_released: fieldErrors?.no_of_albums_released?.[0] || "",
       };
     }
   } finally {

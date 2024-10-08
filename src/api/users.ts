@@ -21,3 +21,23 @@ export const createUser = async (data: UserDetailsType): Promise<any> => {
     payload: data,
   });
 };
+
+export const updateUser = async (
+  id: string,
+  data: UserDetailsType
+): Promise<any> => {
+  return apiClient({
+    url: `/users/${id}`,
+    method: "PUT",
+    contentType: "application/json",
+    payload: data,
+  });
+};
+
+export const getUserById = async (id: string): Promise<any> => {
+  return apiClient({
+    url: `/users/${id}`,
+    method: "GET",
+    contentType: "application/json",
+  });
+};

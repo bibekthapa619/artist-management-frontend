@@ -7,18 +7,20 @@ interface GetUsersApiResponseSuccess {
 }
 
 export interface UserFields {
+  id?: number;
   first_name: string;
   last_name: string;
   dob: string;
   gender: string;
   address: string;
   phone: string;
-  role: string;
+  role?: string;
   email: string;
-  password: string;
+  password?: string;
 }
 
 export interface ArtistFields {
+  id?: number;
   name?: string;
   first_release_year?: number;
   no_of_albums_released?: number;

@@ -46,6 +46,7 @@ import SearchInput from "@/components/search/SearchInput.vue";
 import UserCard from "@/sections/users/UserCard.vue";
 import UserTable from "@/sections/users/UserTable.vue";
 import type { TableOption } from "@/components/table/table";
+import { useRouter } from "vue-router";
 
 const users = ref<User[]>([]);
 const paginationData = ref<PaginationData>({
@@ -57,13 +58,14 @@ const paginationData = ref<PaginationData>({
   page_size: 0,
 });
 const searchQuery = ref<string>("");
+const router = useRouter();
 
 const viewUser = (user: User) => {
   console.log("View user:", user);
 };
 
 const editUser = (user: User) => {
-  console.log("Edit user:", user);
+  router.push(`/users/${user.id}`);
 };
 
 const deleteUser = (id: number) => {

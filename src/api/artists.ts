@@ -21,3 +21,15 @@ export const createArtist = async (data: ArtistDetailsType): Promise<any> => {
     payload: data,
   });
 };
+
+export const updateArtist = async (
+  id: number,
+  data: ArtistDetailsType
+): Promise<any> => {
+  return apiClient({
+    url: `/artists/${id}`,
+    method: "PUT",
+    contentType: "application/json",
+    payload: data,
+  });
+};
