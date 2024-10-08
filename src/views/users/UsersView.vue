@@ -5,31 +5,32 @@
     <div class="flex justify-between items-center mb-4 space-x-4">
       <router-link
         to="/users/create"
-        class="bg-indigo-700 text-white px-4 py-2 h-10 rounded-lg shadow hover:bg-indigo-800 flex items-center justify-center"
+        class="bg-indigo-700 text-white px-4 py-2 h-pageSize.value rounded-lg shadow hover:bg-indigo-800 flex items-center justify-center"
       >
         Create
       </router-link>
       <SearchInput v-model:searchQuery="searchQuery" />
     </div>
-
-    <UserTable
-      :users="users"
-      :paginationData="paginationData"
-      :viewUser="viewUser"
-      :editUser="editUser"
-      :deleteUser="deleteUser"
-      :options="options"
-    />
-
-    <UserCard
-      v-if="users.length"
-      :users="users"
-      :viewUser="viewUser"
-      :editUser="editUser"
-      :deleteUser="deleteUser"
-      :options="options"
-    />
-
+    <div class="hidden md:block">
+      <UserTable
+        :users="users"
+        :paginationData="paginationData"
+        :viewUser="viewUser"
+        :editUser="editUser"
+        :deleteUser="deleteUser"
+        :options="options"
+      />
+    </div>
+    <div class="block md:hidden">
+      <UserCard
+        v-if="users.length"
+        :users="users"
+        :viewUser="viewUser"
+        :editUser="editUser"
+        :deleteUser="deleteUser"
+        :options="options"
+      />
+    </div>
     <Pagination
       :pagination="paginationData"
       :updateCurrentPage="updateCurrentPage"
@@ -49,6 +50,7 @@ import type { TableOption } from "@/components/table/table";
 import { useRouter } from "vue-router";
 
 const users = ref<User[]>([]);
+const pageSize = ref<number>(1);
 const paginationData = ref<PaginationData>({
   total: 0,
   last_page: 0,
@@ -93,18 +95,18 @@ const options: TableOption[] = [
   },
 ];
 
-const fetchUsers = async (page = 1, perPage = 10, query = "") => {
+const fetchUsers = async (page = 1, perPage = pageSize.value, query = "") => {
   let res = await getUsers(page, perPage, query);
   users.value = res.data.users;
   paginationData.value = res.data.meta;
 };
 
 watch(searchQuery, (newQuery) => {
-  fetchUsers(1, 10, newQuery);
+  fetchUsers(1, pageSize.value, newQuery);
 });
 
 watch(refresh, () => {
-  fetchUsers(1, 10);
+  fetchUsers(1, pageSize.value);
 });
 
 onMounted(async () => {

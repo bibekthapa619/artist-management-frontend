@@ -1,7 +1,6 @@
-<!-- Pagination.vue -->
 <template>
   <div
-    v-if="pagination.total > 0"
+    v-if="pagination.last_page > 1"
     class="px-6 py-4 bg-gray-50 flex justify-between items-center"
   >
     <div v-if="pagination.last_page > 1" class="flex space-x-2">
@@ -70,7 +69,7 @@
       </button>
     </div>
   </div>
-  <div v-else class="px-6 py-4">No records found.</div>
+  <div v-if="pagination.total == 0" class="px-6 py-4">No records found.</div>
 </template>
 
 <script setup lang="ts">

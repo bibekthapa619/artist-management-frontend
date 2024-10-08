@@ -1,38 +1,36 @@
 <template>
-  <div class="block md:hidden">
-    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+    <div
+      v-for="(user, index) in users"
+      :key="user.id"
+      class="bg-white shadow-lg rounded-lg p-6 mb-4 transition-transform transform relative"
+    >
       <div
-        v-for="(user, index) in users"
-        :key="user.id"
-        class="bg-white shadow-lg rounded-lg p-6 mb-4 transition-transform transform relative"
+        class="flex justify-between items-center mb-4"
+        v-if="options && options.length > 0"
       >
-        <div
-          class="flex justify-between items-center mb-4"
-          v-if="options && options.length > 0"
-        >
-          <div class="absolute top-4 right-4" :id="`card-options-${user.id}`">
-            <button
-              @click="() => toggleOptions(user.id)"
-              class="text-gray-600 hover:text-gray-900 focus:outline-none"
-            >
-              <i class="fas fa-cog"></i>
-            </button>
-            <div
-              v-if="selectedId === user.id"
-              class="absolute right-0 w-48 mt-1 bg-white shadow-lg rounded-md z-10 border border-gray-200"
-            >
-              <TableOptions :options="options" :argument="user"></TableOptions>
-            </div>
+        <div class="absolute top-4 right-4" :id="`card-options-${user.id}`">
+          <button
+            @click="() => toggleOptions(user.id)"
+            class="text-gray-600 hover:text-gray-900 focus:outline-none"
+          >
+            <i class="fas fa-cog"></i>
+          </button>
+          <div
+            v-if="selectedId === user.id"
+            class="absolute right-0 w-48 mt-1 bg-white shadow-lg rounded-md z-10 border border-gray-200"
+          >
+            <TableOptions :options="options" :argument="user"></TableOptions>
           </div>
         </div>
-        <div class="mb-2">
-          <strong>Name:</strong> {{ user.first_name }} {{ user.last_name }}
-        </div>
-        <div class="mb-2"><strong>Email:</strong> {{ user.email }}</div>
-        <div class="mb-2"><strong>Phone:</strong> {{ user.phone }}</div>
-        <div class="absolute bottom-4 right-4 text-sm text-gray-500">
-          {{ user.role }}
-        </div>
+      </div>
+      <div class="mb-2">
+        <strong>Name:</strong> {{ user.first_name }} {{ user.last_name }}
+      </div>
+      <div class="mb-2"><strong>Email:</strong> {{ user.email }}</div>
+      <div class="mb-2"><strong>Phone:</strong> {{ user.phone }}</div>
+      <div class="absolute bottom-4 right-4 text-sm text-gray-500">
+        {{ user.role }}
       </div>
     </div>
   </div>

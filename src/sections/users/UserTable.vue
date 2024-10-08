@@ -1,12 +1,10 @@
 <template>
-  <div class="hidden md:block">
-    <Table
-      :headers="headers"
-      :rows="formattedUsers"
-      :paginationData="paginationData"
-      :options="options"
-    ></Table>
-  </div>
+  <Table
+    :headers="headers"
+    :rows="formattedUsers"
+    :paginationData="paginationData"
+    :options="options"
+  ></Table>
 </template>
 
 <script lang="ts" setup>
