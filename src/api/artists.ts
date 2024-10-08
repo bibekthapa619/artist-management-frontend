@@ -33,3 +33,11 @@ export const updateArtist = async (
     payload: data,
   });
 };
+
+export const deleteArtistById = async (id: number): Promise<any> => {
+  return apiClient({
+    url: `/artists/${id}`,
+    method: "DELETE",
+    contentType: "application/json",
+  });
+};

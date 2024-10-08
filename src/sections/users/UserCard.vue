@@ -56,11 +56,8 @@ import type { FormattedUser, User } from "@/types/api/common";
 import TableOptions from "@/components/table/TableOptions.vue";
 import type { TableOption } from "@/components/table/table";
 
-const { users, viewUser, editUser, deleteUser, options } = defineProps<{
+const { users, options } = defineProps<{
   users: User[];
-  viewUser: (user: FormattedUser) => void;
-  editUser: (user: FormattedUser) => void;
-  deleteUser: (id: FormattedUser) => void;
   options?: TableOption[];
 }>();
 

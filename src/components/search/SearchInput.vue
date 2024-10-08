@@ -3,7 +3,7 @@
     type="text"
     v-model="searchQuery"
     @input="debouncedSearch"
-    placeholder="Search users..."
+    :placeholder="placeholder"
     class="border rounded p-2"
   />
 </template>
@@ -14,6 +14,10 @@ import { ref } from "vue";
 const emit = defineEmits(["update:searchQuery"]);
 
 const searchQuery = ref<string>("");
+
+const { placeholder } = defineProps<{
+  placeholder: string;
+}>();
 
 const debounce = (func: Function, delay: number) => {
   let timeout: ReturnType<typeof setTimeout> | null = null;

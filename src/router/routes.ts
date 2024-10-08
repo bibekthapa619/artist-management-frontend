@@ -7,6 +7,7 @@ import UserCreateView from "@/views/users/UserCreateView.vue";
 import UserEditView from "@/views/users/UserEditView.vue";
 import UserShowView from "@/views/users/UserShowView.vue";
 import NotFound from "@/views/not-found/NotFound.vue";
+import ArtistsView from "@/views/artists/ArtistsView.vue";
 
 const guestRoutes = [
   {
@@ -65,6 +66,14 @@ const authRoutes = [
         path: "users/:id",
         name: "users.show",
         component: UserShowView,
+        meta: {
+          roles: ["super_admin"],
+        },
+      },
+      {
+        path: "artists",
+        name: "artists.index",
+        component: ArtistsView,
         meta: {
           roles: ["super_admin"],
         },
