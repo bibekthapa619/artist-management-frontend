@@ -17,13 +17,13 @@
       >
         <a
           href="#"
-          class="block px-4 py-2 text-gray-800 hover:bg-blue-500 hover:text-white"
+          class="block px-4 py-2 text-gray-800 hover:bg-indigo-700 hover:text-white"
           >Profile</a
         >
         <a
           href="#"
           @click.prevent="logout"
-          class="block px-4 py-2 text-gray-800 hover:bg-blue-500 hover:text-white"
+          class="block px-4 py-2 text-gray-800 hover:bg-indigo-700 hover:text-white"
           >Logout</a
         >
       </div>

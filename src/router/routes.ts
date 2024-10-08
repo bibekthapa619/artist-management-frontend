@@ -6,6 +6,7 @@ import DashboardLayout from "@/layouts/DashboardLayout.vue"; // Import the layou
 import UserCreateView from "@/views/users/UserCreateView.vue";
 import UserEditView from "@/views/users/UserEditView.vue";
 import UserShowView from "@/views/users/UserShowView.vue";
+import NotFound from "@/views/not-found/NotFound.vue";
 
 const guestRoutes = [
   {
@@ -67,6 +68,11 @@ const authRoutes = [
         meta: {
           roles: ["super_admin"],
         },
+      },
+      {
+        path: "/:catchAll(.*)",
+        name: "NotFound",
+        component: NotFound,
       },
     ],
   },
