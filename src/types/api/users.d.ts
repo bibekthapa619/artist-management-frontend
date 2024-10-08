@@ -21,11 +21,16 @@ export interface UserFields {
 export interface ArtistFields {
   name?: string;
   first_release_year?: number;
-  num_of_albums_released?: number;
+  no_of_albums_released?: number;
 }
 
 export type UserDetailsType = {
   user: UserFields;
+};
+
+export type ArtistDetailsType = {
+  user: UserFields;
+  artist: ArtistFields;
 };
 
 export type GetUsersApiResponseSuccess = SuccessApiResponse<LoginResponseData>;

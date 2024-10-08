@@ -193,23 +193,23 @@
 
               <div class="mb-4">
                 <label
-                  for="num_of_albums_released"
+                  for="no_of_albums_released"
                   class="block text-sm font-medium text-gray-700"
                   >Number of Albums Released
                   <span class="text-red-500">*</span></label
                 >
                 <input
-                  id="num_of_albums_released"
-                  v-model="artistDetails.num_of_albums_released"
+                  id="no_of_albums_released"
+                  v-model="artistDetails.no_of_albums_released"
                   type="number"
                   class="mt-1 block w-full p-2 border rounded-md"
-                  :class="{ 'border-red-500': errors.num_of_albums_released }"
+                  :class="{ 'border-red-500': errors.no_of_albums_released }"
                   required
                 />
                 <span
-                  v-if="errors.num_of_albums_released"
+                  v-if="errors.no_of_albums_released"
                   class="text-red-500 text-xs"
-                  >{{ errors.num_of_albums_released }}</span
+                  >{{ errors.no_of_albums_released }}</span
                 >
               </div>
             </div>
@@ -270,6 +270,7 @@
 </template>
 
 <script lang="ts" setup>
+import { createArtist } from "@/api/artists";
 import { createUser } from "@/api/users";
 import type { ArtistFields, UserFields } from "@/types/api/users";
 import { AxiosError } from "axios";
@@ -291,7 +292,7 @@ const userDetails = ref<UserFields>({
 const artistDetails = ref<ArtistFields>({
   name: "",
   first_release_year: undefined,
-  num_of_albums_released: undefined,
+  no_of_albums_released: undefined,
 });
 
 const errors = ref<{ [key: string]: string }>({});
@@ -334,7 +335,7 @@ const submitForm = async () => {
         user: userDetails.value,
       });
     } else if (userDetails.value.role === "artist") {
-      console.log({
+      await createArtist({
         user: userDetails.value,
         artist: artistDetails.value,
       });
@@ -358,7 +359,7 @@ const submitForm = async () => {
 
         artist_name: fieldErrors?.name?.[0] || "",
         first_release_year: fieldErrors?.first_release_year?.[0] || "",
-        num_of_albums_released: fieldErrors?.num_of_albums_released?.[0] || "",
+        no_of_albums_released: fieldErrors?.no_of_albums_released?.[0] || "",
       };
     }
   } finally {
