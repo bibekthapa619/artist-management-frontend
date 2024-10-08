@@ -1,6 +1,6 @@
 <template>
   <aside
-    class="h-screen bg-white w-64 shadow-lg md:block transition-transform duration-300 ease-in-out"
+    class="h-screen bg-indigo-700 w-64 shadow-lg md:block transition-transform duration-300 ease-in-out"
     :class="{
       absolute: windowWidth < 1024,
       'translate-x-0': isSidebarOpen,
@@ -9,12 +9,10 @@
   >
     <div class="">
       <div class="flex justify-between items-center">
-        <h2 class="text-xl text-indigo-700 font-semibold p-4">
-          Artist Management
-        </h2>
+        <h2 class="text-xl text-white font-semibold p-4">Artist Management</h2>
         <button
           @click="closeSidebar"
-          class="fixed right-0 p-4 text-gray-600 hover:text-gray-900 lg:hidden"
+          class="fixed right-0 p-4 text-white hover:text-gray-900 lg:hidden"
         >
           <i class="fas fa-times"></i>
         </button>
@@ -23,7 +21,7 @@
         <li v-for="(route, index) in routes" :key="index">
           <div
             @click="navigateTo(route.path)"
-            class="block px-4 py-2 text-gray-600 hover:bg-indigo-700 hover:text-white cursor-pointer"
+            class="block px-4 py-2 text-white hover:bg-gray-500 hover:text-white cursor-pointer"
             v-if="user && route.roles && route.roles.includes(user.role)"
           >
             <i :class="route.icon + ' mr-2'"></i>

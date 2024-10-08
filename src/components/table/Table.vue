@@ -1,6 +1,6 @@
 <template>
   <table class="min-w-full bg-white shadow-md rounded-lg">
-    <thead class="bg-indigo-700 text-white">
+    <thead class="bg-white text-gray">
       <tr>
         <th
           class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider"
