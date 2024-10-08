@@ -1,13 +1,13 @@
 <template>
   <div
     v-if="pagination.last_page > 1"
-    class="px-6 py-4 bg-gray-50 flex justify-between items-center"
+    class="px-4 sm:px-6 py-3 sm:py-4 bg-gray-50 flex justify-between items-center"
   >
-    <div v-if="pagination.last_page > 1" class="flex space-x-2">
+    <div v-if="pagination.last_page > 1" class="flex space-x-1 sm:space-x-2">
       <button
         @click="prevPage"
         :disabled="pagination.current_page === 1"
-        class="px-3 py-2 bg-indigo-500 text-white rounded-lg hover:bg-indigo-600 flex items-center"
+        class="px-2 sm:px-3 py-1 sm:py-2 bg-indigo-500 text-white rounded-lg hover:bg-indigo-600 flex items-center text-sm sm:text-base"
         v-if="pagination.current_page > 1"
       >
         <
@@ -18,12 +18,14 @@
         :class="
           pagination.current_page === 1 ? 'bg-indigo-700' : 'bg-indigo-500'
         "
-        class="px-3 py-2 text-white rounded-lg hover:bg-indigo-600"
+        class="px-2 sm:px-3 py-1 sm:py-2 text-white rounded-lg hover:bg-indigo-600 text-sm sm:text-base"
       >
         1
       </button>
 
-      <span v-if="pagination.current_page > 3" class="px-3 py-2 text-gray-500"
+      <span
+        v-if="pagination.current_page > 3"
+        class="px-2 sm:px-3 py-1 sm:py-2 text-gray-500 text-sm sm:text-base"
         >...</span
       >
 
@@ -36,14 +38,14 @@
           'bg-indigo-500': pagination.current_page !== page,
           'text-white rounded-lg hover:bg-indigo-600': true,
         }"
-        class="px-3 py-2"
+        class="px-2 sm:px-3 py-1 sm:py-2 text-sm sm:text-base"
       >
         {{ page }}
       </button>
 
       <span
         v-if="pagination.current_page < pagination.last_page - 2"
-        class="px-3 py-2 text-gray-500"
+        class="px-2 sm:px-3 py-1 sm:py-2 text-gray-500 text-sm sm:text-base"
         >...</span
       >
 
@@ -54,7 +56,7 @@
             ? 'bg-indigo-700'
             : 'bg-indigo-500'
         "
-        class="px-3 py-2 text-white rounded-lg hover:bg-indigo-600"
+        class="px-2 sm:px-3 py-1 sm:py-2 text-white rounded-lg hover:bg-indigo-600 text-sm sm:text-base"
       >
         {{ pagination.last_page }}
       </button>
@@ -62,14 +64,16 @@
       <button
         @click="nextPage"
         :disabled="pagination.current_page === pagination.last_page"
-        class="px-3 py-2 bg-indigo-500 text-white rounded-lg hover:bg-indigo-600 flex items-center"
+        class="px-2 sm:px-3 py-1 sm:py-2 bg-indigo-500 text-white rounded-lg hover:bg-indigo-600 flex items-center text-sm sm:text-base"
         v-if="pagination.current_page < pagination.last_page"
       >
         >
       </button>
     </div>
   </div>
-  <div v-if="pagination.total == 0" class="px-6 py-4">No records found.</div>
+  <div v-if="pagination.total == 0" class="px-4 sm:px-6 py-3 sm:py-4">
+    No records found.
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -81,14 +85,13 @@ const props = defineProps<{
   updateCurrentPage: (page: number) => void;
 }>();
 
-// Computed properties for pagination logic
 const visiblePages = computed(() => {
   const pages: number[] = [];
   const totalPages = props.pagination.last_page;
   const currentPage = props.pagination.current_page;
 
-  const startPage = Math.max(2, currentPage - 1); // Adjust based on your needs
-  const endPage = Math.min(totalPages - 1, currentPage + 1); // Adjust based on your needs
+  const startPage = Math.max(2, currentPage - 1);
+  const endPage = Math.min(totalPages - 1, currentPage + 1);
 
   for (let i = startPage; i <= endPage; i++) {
     pages.push(i);
@@ -96,7 +99,6 @@ const visiblePages = computed(() => {
   return pages;
 });
 
-// Emit events for page changes
 const changePage = (page: number) => {
   if (page !== props.pagination.current_page) {
     props.updateCurrentPage(page);
@@ -115,7 +117,3 @@ const nextPage = () => {
   }
 };
 </script>
-
-<style scoped>
-/* Add any additional styling you want for the pagination component */
-</style>

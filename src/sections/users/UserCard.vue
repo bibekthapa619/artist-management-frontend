@@ -1,10 +1,11 @@
 <template>
-  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
     <div
       v-for="(user, index) in users"
       :key="user.id"
-      class="bg-white shadow-lg rounded-lg p-6 mb-4 transition-transform transform relative"
+      class="bg-white shadow-lg rounded-lg p-6 mb-6 transition-transform transform hover:scale-105 relative"
     >
+      <!-- Card Options -->
       <div
         class="flex justify-between items-center mb-4"
         v-if="options && options.length > 0"
@@ -24,11 +25,24 @@
           </div>
         </div>
       </div>
-      <div class="mb-2">
-        <strong>Name:</strong> {{ user.first_name }} {{ user.last_name }}
+
+      <!-- User Details -->
+      <div class="mb-4">
+        <div class="text-xl font-bold mb-2 text-gray-900">
+          {{ user.first_name }} {{ user.last_name }}
+        </div>
       </div>
-      <div class="mb-2"><strong>Email:</strong> {{ user.email }}</div>
-      <div class="mb-2"><strong>Phone:</strong> {{ user.phone }}</div>
+
+      <div class="mb-2 flex items-center">
+        <i class="fas fa-envelope mr-2 text-indigo-600"></i>
+        <span class="text-gray-800">{{ user.email }}</span>
+      </div>
+
+      <div class="mb-2 flex items-center">
+        <i class="fas fa-phone mr-2 text-indigo-600"></i>
+        <span class="text-gray-800">{{ user.phone }}</span>
+      </div>
+
       <div class="absolute bottom-4 right-4 text-sm text-gray-500">
         {{ user.role }}
       </div>

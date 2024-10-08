@@ -5,12 +5,13 @@
     <div class="flex justify-between items-center mb-4 space-x-4">
       <router-link
         to="/users/create"
-        class="bg-indigo-700 text-white px-4 py-2 h-pageSize.value rounded-lg shadow hover:bg-indigo-800 flex items-center justify-center"
+        class="bg-indigo-700 text-white px-4 py-2 h-10 rounded-lg shadow hover:bg-indigo-800 flex items-center justify-center"
       >
         Create
       </router-link>
-      <SearchInput v-model:searchQuery="searchQuery" />
+      <SearchInput v-model:searchQuery="searchQuery" class="w-48 sm:w-64" />
     </div>
+
     <div class="hidden md:block">
       <UserTable
         :users="users"
@@ -50,7 +51,7 @@ import type { TableOption } from "@/components/table/table";
 import { useRouter } from "vue-router";
 
 const users = ref<User[]>([]);
-const pageSize = ref<number>(1);
+const pageSize = ref<number>(10);
 const paginationData = ref<PaginationData>({
   total: 0,
   last_page: 0,
