@@ -65,11 +65,17 @@ const refresh = ref<boolean>(false);
 const router = useRouter();
 
 const viewUser = (user: FormattedUser) => {
-  console.log("View user:", user);
+  router.push({
+    name: "users.show",
+    params: { id: user.id },
+  });
 };
 
 const editUser = (user: FormattedUser) => {
-  router.push(`/users/${user.id}`);
+  router.push({
+    name: "users.edit",
+    params: { id: user.id },
+  });
 };
 
 const deleteUser = async (user: FormattedUser) => {

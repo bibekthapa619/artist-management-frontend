@@ -5,6 +5,7 @@ import UsersView from "@/views/users/UsersView.vue";
 import DashboardLayout from "@/layouts/DashboardLayout.vue"; // Import the layout
 import UserCreateView from "@/views/users/UserCreateView.vue";
 import UserEditView from "@/views/users/UserEditView.vue";
+import UserShowView from "@/views/users/UserShowView.vue";
 
 const guestRoutes = [
   {
@@ -52,9 +53,17 @@ const authRoutes = [
         },
       },
       {
-        path: "users/:id",
+        path: "users/:id/edit",
         name: "users.edit",
         component: UserEditView,
+        meta: {
+          roles: ["super_admin"],
+        },
+      },
+      {
+        path: "users/:id",
+        name: "users.show",
+        component: UserShowView,
         meta: {
           roles: ["super_admin"],
         },
