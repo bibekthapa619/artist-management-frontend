@@ -38,10 +38,10 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, onMounted, onBeforeUnmount, watch } from "vue";
-import { getUsers } from "@/api/users";
+import { ref, onMounted, watch } from "vue";
+import { deleteUserById, getUsers } from "@/api/users";
 import Pagination from "@/components/pagination/Pagination.vue";
-import type { PaginationData, User } from "@/types/api/common";
+import type { FormattedUser, PaginationData, User } from "@/types/api/common";
 import SearchInput from "@/components/search/SearchInput.vue";
 import UserCard from "@/sections/users/UserCard.vue";
 import UserTable from "@/sections/users/UserTable.vue";
@@ -58,18 +58,23 @@ const paginationData = ref<PaginationData>({
   page_size: 0,
 });
 const searchQuery = ref<string>("");
+const refresh = ref<boolean>(false);
 const router = useRouter();
 
-const viewUser = (user: User) => {
+const viewUser = (user: FormattedUser) => {
   console.log("View user:", user);
 };
 
-const editUser = (user: User) => {
+const editUser = (user: FormattedUser) => {
   router.push(`/users/${user.id}`);
 };
 
-const deleteUser = (id: number) => {
-  console.log("Delete user with id:", id);
+const deleteUser = async (user: FormattedUser) => {
+  const isConfirmed = confirm(`Are you sure you want to delete ${user.name}?`);
+  if (isConfirmed) {
+    await deleteUserById(user.id);
+    refresh.value = !refresh.value;
+  }
 };
 
 const options: TableOption[] = [
@@ -95,7 +100,11 @@ const fetchUsers = async (page = 1, perPage = 10, query = "") => {
 };
 
 watch(searchQuery, (newQuery) => {
-  fetchUsers(1, paginationData.value.page_size, newQuery);
+  fetchUsers(1, 10, newQuery);
+});
+
+watch(refresh, () => {
+  fetchUsers(1, 10);
 });
 
 onMounted(async () => {

@@ -11,7 +11,7 @@
 
 <script lang="ts" setup>
 import { computed, defineProps } from "vue";
-import type { PaginationData, User } from "@/types/api/common";
+import type { FormattedUser, PaginationData, User } from "@/types/api/common";
 import type { TableHeaderType, TableOption } from "@/components/table/table";
 import Table from "@/components/table/Table.vue";
 
@@ -19,9 +19,9 @@ const { users, paginationData, viewUser, editUser, deleteUser, options } =
   defineProps<{
     users: User[];
     paginationData: PaginationData;
-    viewUser: (user: User) => void;
-    editUser: (user: User) => void;
-    deleteUser: (id: number) => void;
+    viewUser: (user: FormattedUser) => void;
+    editUser: (user: FormattedUser) => void;
+    deleteUser: (id: FormattedUser) => void;
     options?: TableOption[];
   }>();
 

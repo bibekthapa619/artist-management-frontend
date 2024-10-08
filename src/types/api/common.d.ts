@@ -7,6 +7,14 @@ export interface User {
   phone: string;
 }
 
+export interface FormattedUser {
+  id: number;
+  name: string;
+  email: string;
+  role: string;
+  phone: string;
+}
+
 export interface PaginationData {
   current_page: number;
   total: number;

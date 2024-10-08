@@ -40,15 +40,15 @@
 
 <script lang="ts" setup>
 import { defineProps, onBeforeUnmount, onMounted, ref, type Ref } from "vue";
-import type { User } from "@/types/api/common";
+import type { FormattedUser, User } from "@/types/api/common";
 import TableOptions from "@/components/table/TableOptions.vue";
 import type { TableOption } from "@/components/table/table";
 
 const { users, viewUser, editUser, deleteUser, options } = defineProps<{
   users: User[];
-  viewUser: (user: User) => void;
-  editUser: (user: User) => void;
-  deleteUser: (id: number) => void;
+  viewUser: (user: FormattedUser) => void;
+  editUser: (user: FormattedUser) => void;
+  deleteUser: (id: FormattedUser) => void;
   options?: TableOption[];
 }>();
 

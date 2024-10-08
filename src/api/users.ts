@@ -41,3 +41,11 @@ export const getUserById = async (id: string): Promise<any> => {
     contentType: "application/json",
   });
 };
+
+export const deleteUserById = async (id: number): Promise<any> => {
+  return apiClient({
+    url: `/users/${id}`,
+    method: "DELETE",
+    contentType: "application/json",
+  });
+};
