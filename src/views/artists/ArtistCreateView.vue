@@ -1,13 +1,13 @@
 <template>
   <div class="">
     <nav class="text-sm mb-4">
-      <router-link to="/users" class="text-indigo-600 hover:underline"
-        >Users</router-link
+      <router-link to="/artists" class="text-indigo-600 hover:underline"
+        >Artists</router-link
       >
       <span class="mx-2">/</span>
-      <span>Edit</span>
+      <span>Create</span>
     </nav>
-    <h1 class="text-2xl font-bold mb-4">Edit User</h1>
+    <h1 class="text-2xl font-bold mb-4">Create Artist</h1>
 
     <div class="bg-white shadow-md rounded p-6">
       <UserForm
@@ -16,65 +16,50 @@
         :submitForm="submitForm"
         :errors="errors"
         :loading="loading"
-        :formType="'user'"
-        :formActionType="'edit'"
+        :formActionType="'create'"
+        :formType="'artist'"
       ></UserForm>
     </div>
   </div>
 </template>
 
 <script lang="ts" setup>
-import { onMounted, ref } from "vue";
-import { useRoute, useRouter } from "vue-router";
-import { updateUser, getUserById } from "@/api/users";
+import { createArtist } from "@/api/artists";
 import type { ArtistFields, UserFields } from "@/types/api/users";
 import { AxiosError } from "axios";
-import { updateArtist } from "@/api/artists";
+import { ref } from "vue";
+import { useRouter } from "vue-router";
 import UserForm from "@/components/forms/UserForm.vue";
 
 const userDetails = ref<UserFields>({
-  id: 0,
   first_name: "",
   last_name: "",
   dob: "",
   gender: "",
   address: "",
   phone: "",
+  role: "artist",
   email: "",
-  role: "",
+  password: "",
 });
 
 const artistDetails = ref<ArtistFields>({
-  id: 0,
   name: "",
   first_release_year: undefined,
   no_of_albums_released: undefined,
-});
-
-const route = useRoute();
-const userId: string | string[] = route.params.id;
-
-onMounted(async () => {
-  loading.value = true;
-  try {
-    const res = await getUserById(userId as string);
-    userDetails.value = res.data.user;
-    if (res.data.user.role === "artist") {
-      artistDetails.value = res.data.artist;
-    }
-  } catch (error) {
-    console.error(error);
-  } finally {
-    loading.value = false;
-  }
 });
 
 const errors = ref<{ [key: string]: string }>({});
 const loading = ref(false);
 const router = useRouter();
 
-function validateField(field: keyof UserFields) {
-  const value = userDetails.value[field];
+function validateField(field: keyof UserFields | keyof ArtistFields) {
+  errors.value = {};
+  const value =
+    field in userDetails.value
+      ? userDetails.value[field as keyof UserFields]
+      : artistDetails.value[field as keyof ArtistFields];
+
   if (!value) {
     errors.value[field] = "This field is required.";
   } else {
@@ -87,23 +72,23 @@ const submitForm = async () => {
     validateField(key as keyof UserFields);
   }
 
+  if (userDetails.value.role === "artist") {
+    for (const key in artistDetails.value) {
+      validateField(key as keyof ArtistFields);
+    }
+  }
+
   if (Object.keys(errors.value).length > 0) {
     return;
   }
 
   loading.value = true;
   try {
-    if (userDetails.value.role === "artist_manager") {
-      await updateUser(userId as string, {
-        user: userDetails.value,
-      });
-    } else {
-      await updateArtist(artistDetails.value.id as number, {
-        user: userDetails.value,
-        artist: artistDetails.value,
-      });
-    }
-    router.push("/users");
+    await createArtist({
+      user: userDetails.value,
+      artist: artistDetails.value,
+    });
+    router.push("/artists");
   } catch (error) {
     console.error(error);
     if (error instanceof AxiosError && error.response) {
@@ -116,7 +101,13 @@ const submitForm = async () => {
         gender: fieldErrors?.gender?.[0] || "",
         address: fieldErrors?.address?.[0] || "",
         phone: fieldErrors?.phone?.[0] || "",
+        role: fieldErrors?.role?.[0] || "",
         email: fieldErrors?.email?.[0] || "",
+        password: fieldErrors?.password?.[0] || "",
+
+        artist_name: fieldErrors?.name?.[0] || "",
+        first_release_year: fieldErrors?.first_release_year?.[0] || "",
+        no_of_albums_released: fieldErrors?.no_of_albums_released?.[0] || "",
       };
     }
   } finally {

@@ -34,6 +34,14 @@ export const updateArtist = async (
   });
 };
 
+export const getArtistById = async (id: string): Promise<any> => {
+  return apiClient({
+    url: `/artists/${id}`,
+    method: "GET",
+    contentType: "application/json",
+  });
+};
+
 export const deleteArtistById = async (id: number): Promise<any> => {
   return apiClient({
     url: `/artists/${id}`,

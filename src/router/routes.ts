@@ -8,6 +8,8 @@ import UserEditView from "@/views/users/UserEditView.vue";
 import UserShowView from "@/views/users/UserShowView.vue";
 import NotFound from "@/views/not-found/NotFound.vue";
 import ArtistsView from "@/views/artists/ArtistsView.vue";
+import ArtistCreateView from "@/views/artists/ArtistCreateView.vue";
+import ArtistEditView from "@/views/artists/ArtistEditView.vue";
 
 const guestRoutes = [
   {
@@ -74,6 +76,22 @@ const authRoutes = [
         path: "artists",
         name: "artists.index",
         component: ArtistsView,
+        meta: {
+          roles: ["super_admin", "artist_manager"],
+        },
+      },
+      {
+        path: "artists/create",
+        name: "artists.create",
+        component: ArtistCreateView,
+        meta: {
+          roles: ["super_admin", "artist_manager"],
+        },
+      },
+      {
+        path: "artists/:id",
+        name: "artists.edit",
+        component: ArtistEditView,
         meta: {
           roles: ["super_admin", "artist_manager"],
         },

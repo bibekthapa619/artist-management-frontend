@@ -2,12 +2,12 @@
   <div class="">
     <nav class="text-sm mb-4">
       <router-link to="/users" class="text-indigo-600 hover:underline"
-        >Users</router-link
+        >Artists</router-link
       >
       <span class="mx-2">/</span>
       <span>Edit</span>
     </nav>
-    <h1 class="text-2xl font-bold mb-4">Edit User</h1>
+    <h1 class="text-2xl font-bold mb-4">Edit Artist</h1>
 
     <div class="bg-white shadow-md rounded p-6">
       <UserForm
@@ -16,7 +16,7 @@
         :submitForm="submitForm"
         :errors="errors"
         :loading="loading"
-        :formType="'user'"
+        :formType="'artist'"
         :formActionType="'edit'"
       ></UserForm>
     </div>
@@ -26,10 +26,9 @@
 <script lang="ts" setup>
 import { onMounted, ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
-import { updateUser, getUserById } from "@/api/users";
 import type { ArtistFields, UserFields } from "@/types/api/users";
 import { AxiosError } from "axios";
-import { updateArtist } from "@/api/artists";
+import { getArtistById, updateArtist } from "@/api/artists";
 import UserForm from "@/components/forms/UserForm.vue";
 
 const userDetails = ref<UserFields>({
@@ -41,7 +40,7 @@ const userDetails = ref<UserFields>({
   address: "",
   phone: "",
   email: "",
-  role: "",
+  role: "artist",
 });
 
 const artistDetails = ref<ArtistFields>({
@@ -57,7 +56,7 @@ const userId: string | string[] = route.params.id;
 onMounted(async () => {
   loading.value = true;
   try {
-    const res = await getUserById(userId as string);
+    const res = await getArtistById(userId as string);
     userDetails.value = res.data.user;
     if (res.data.user.role === "artist") {
       artistDetails.value = res.data.artist;
@@ -93,17 +92,11 @@ const submitForm = async () => {
 
   loading.value = true;
   try {
-    if (userDetails.value.role === "artist_manager") {
-      await updateUser(userId as string, {
-        user: userDetails.value,
-      });
-    } else {
-      await updateArtist(artistDetails.value.id as number, {
-        user: userDetails.value,
-        artist: artistDetails.value,
-      });
-    }
-    router.push("/users");
+    await updateArtist(artistDetails.value.id as number, {
+      user: userDetails.value,
+      artist: artistDetails.value,
+    });
+    router.push("/artists");
   } catch (error) {
     console.error(error);
     if (error instanceof AxiosError && error.response) {

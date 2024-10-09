@@ -110,7 +110,10 @@
           }}</span>
         </div>
 
-        <div class="mb-4" v-if="formType === 'create'">
+        <div
+          class="mb-4"
+          v-if="formActionType === 'create' && formType === 'user'"
+        >
           <label for="role" class="block text-sm font-medium text-gray-700"
             >Role <span class="text-red-500">*</span></label
           >
@@ -131,7 +134,10 @@
         </div>
       </div>
 
-      <div v-if="userDetails.role === 'artist'" class="mt-6">
+      <div
+        v-if="userDetails.role === 'artist' || formType === 'artist'"
+        class="mt-6"
+      >
         <h2 class="text-xl font-semibold mb-4">Artist Details</h2>
 
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -220,7 +226,7 @@
         }}</span>
       </div>
 
-      <div class="mb-4" v-if="formType === 'create'">
+      <div class="mb-4" v-if="formActionType === 'create'">
         <label for="password" class="block text-sm font-medium text-gray-700"
           >Password <span class="text-red-500">*</span></label
         >
@@ -258,7 +264,8 @@ interface Props {
   artistDetails: ArtistFields;
   errors: Record<string, string>;
   loading: boolean;
-  formType: "edit" | "create";
+  formActionType: "edit" | "create";
+  formType: "user" | "artist";
   submitForm: () => void;
 }
 

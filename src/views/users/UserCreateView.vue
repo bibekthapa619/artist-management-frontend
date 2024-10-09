@@ -16,7 +16,8 @@
         :submitForm="submitForm"
         :errors="errors"
         :loading="loading"
-        :formType="'create'"
+        :formActionType="'create'"
+        :formType="'user'"
       ></UserForm>
     </div>
   </div>
