@@ -41,3 +41,11 @@ export const deleteArtistById = async (id: number): Promise<any> => {
     contentType: "application/json",
   });
 };
+
+export const exportArtist = async (search = ""): Promise<any> => {
+  return apiClient({
+    url: `/artists/export`,
+    method: "GET",
+    contentType: "application/json",
+  });
+};

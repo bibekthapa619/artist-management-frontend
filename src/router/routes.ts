@@ -75,7 +75,7 @@ const authRoutes = [
         name: "artists.index",
         component: ArtistsView,
         meta: {
-          roles: ["super_admin"],
+          roles: ["super_admin", "artist_manager"],
         },
       },
       {

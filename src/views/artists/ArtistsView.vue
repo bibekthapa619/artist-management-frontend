@@ -3,10 +3,16 @@
     <h1 class="text-2xl font-bold mb-4">Artists</h1>
 
     <div class="flex justify-between items-center mb-4 space-x-4">
+      <SearchInput
+        v-model:searchQuery="searchQuery"
+        class="w-48 sm:w-64 float-right"
+        :placeholder="`Search artists...`"
+      />
       <div
         class="relative inline-block text-left"
         @click="toggleDropdown"
         id="options-dropdown"
+        v-if="user && user.role == 'artist_manager'"
       >
         <button
           class="bg-indigo-700 text-white px-4 py-2 h-10 rounded shadow hover:bg-indigo-800 flex items-center justify-center"
@@ -40,11 +46,6 @@
           </a>
         </div>
       </div>
-      <SearchInput
-        v-model:searchQuery="searchQuery"
-        class="w-48 sm:w-64"
-        :placeholder="`Search artists...`"
-      />
     </div>
 
     <div class="hidden md:block">
@@ -69,7 +70,7 @@
 
 <script lang="ts" setup>
 import { ref, onMounted, watch, onBeforeUnmount } from "vue";
-import { deleteArtistById, getArtists } from "@/api/artists";
+import { deleteArtistById, exportArtist, getArtists } from "@/api/artists";
 import Pagination from "@/components/pagination/Pagination.vue";
 import type { PaginationData, Artist } from "@/types/api/common";
 import SearchInput from "@/components/search/SearchInput.vue";
@@ -77,6 +78,8 @@ import ArtistTable from "@/sections/artists/ArtistTable.vue";
 import type { TableOption } from "@/components/table/table";
 import { useRouter } from "vue-router";
 import ArtistCard from "@/sections/artists/ArtistCard.vue";
+import { useUserStore } from "@/store/userStore";
+import { storeToRefs } from "pinia";
 
 const artists = ref<Artist[]>([]);
 const pageSize = ref<number>(10);
@@ -92,6 +95,9 @@ const searchQuery = ref<string>("");
 const refresh = ref<boolean>(false);
 const router = useRouter();
 const isDropdownOpen = ref(false);
+
+const userStore = useUserStore();
+const { user } = storeToRefs(userStore);
 
 const viewArtist = (artist: Artist) => {
   router.push({
@@ -151,9 +157,27 @@ const toggleDropdown = () => {
   isDropdownOpen.value = !isDropdownOpen.value;
 };
 
-const handleOptionClick = (option: string) => {
-  console.log(`Selected option: ${option}`);
-  isDropdownOpen.value = false;
+const handleOptionClick = async (option: string) => {
+  if (option === "export") {
+    try {
+      let res = await exportArtist(searchQuery.value);
+      console.log(res);
+      const url = window.URL.createObjectURL(new Blob([res]));
+
+      const link = document.createElement("a");
+      link.href = url;
+      link.setAttribute("download", "artists.csv");
+
+      document.body.appendChild(link);
+      link.click();
+
+      link.parentNode?.removeChild(link);
+      window.URL.revokeObjectURL(url);
+    } catch (err) {
+      console.log(err);
+    }
+  } else if (option === "import") {
+  }
 };
 
 onMounted(async () => {

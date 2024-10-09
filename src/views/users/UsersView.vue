@@ -3,17 +3,17 @@
     <h1 class="text-2xl font-bold mb-4">Users</h1>
 
     <div class="flex justify-between items-center mb-4 space-x-4">
+      <SearchInput
+        v-model:searchQuery="searchQuery"
+        class="w-48 sm:w-64"
+        :placeholder="`Search users...`"
+      />
       <router-link
         to="/users/create"
         class="bg-indigo-700 text-white px-4 py-2 h-10 rounded shadow hover:bg-indigo-800 flex items-center justify-center"
       >
         Create
       </router-link>
-      <SearchInput
-        v-model:searchQuery="searchQuery"
-        class="w-48 sm:w-64"
-        :placeholder="`Search users...`"
-      />
     </div>
 
     <div class="hidden md:block">
