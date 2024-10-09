@@ -1,20 +1,16 @@
 <template>
-  <router-view />
+  <div v-if="isLoading" class="">
+    <Loading></Loading>
+  </div>
+  <div v-else>
+    <router-view />
+  </div>
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
-
-const loading = ref(true);
+import { storeToRefs } from "pinia";
+import { useUserStore } from "@/store/userStore";
+import Loading from "./components/loading/Loading.vue";
+const userStore = useUserStore();
+const { isLoading } = storeToRefs(userStore);
 </script>
-
-<style scoped>
-/* Example loading screen styles */
-.loading-screen {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  font-size: 1.5em;
-}
-</style>

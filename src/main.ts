@@ -15,11 +15,13 @@ const pinia = createPinia();
 const app = createApp(App);
 
 app.use(pinia);
+app.mount("#app");
 
 const initializeApp = async () => {
   const userStore = useUserStore();
 
   try {
+    userStore.setLoading(true);
     const response: MeApiResponseSuccess = await me();
     const userData = response.data;
 
@@ -40,10 +42,11 @@ const initializeApp = async () => {
     } else {
       console.error("Failed to fetch user data:", error);
     }
+  } finally {
+    userStore.setLoading(false);
   }
 
   app.use(router);
-  app.mount("#app");
 };
 
 const handleAuthenticationFailure = () => {

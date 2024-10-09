@@ -6,6 +6,7 @@ export const useUserStore = defineStore("user", {
   state: (): UserState => ({
     user: {} as User | null,
     isLoggedIn: false,
+    isLoading: false,
   }),
   actions: {
     setUser(userData: User) {
@@ -15,6 +16,9 @@ export const useUserStore = defineStore("user", {
     clearUser() {
       this.user = null;
       this.isLoggedIn = false;
+    },
+    setLoading(value: boolean) {
+      this.isLoading = value;
     },
   },
 });
