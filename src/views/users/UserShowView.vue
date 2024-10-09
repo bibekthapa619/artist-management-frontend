@@ -9,7 +9,7 @@
     </nav>
     <h1 class="text-2xl font-bold mb-4">User Details</h1>
 
-    <div class="bg-white shadow-md rounded-lg p-6">
+    <div class="bg-white shadow-md rounded p-6">
       <div class="mb-6">
         <h2 class="text-xl font-semibold mb-4">User Details</h2>
 
@@ -21,7 +21,7 @@
             >
               First Name
             </label>
-            <div class="mt-1 block w-full p-2 border rounded-md bg-gray-100">
+            <div class="mt-1 block w-full p-2 border rounded bg-gray-100">
               {{ userDetails.first_name }}
             </div>
           </div>
@@ -33,7 +33,7 @@
             >
               Last Name
             </label>
-            <div class="mt-1 block w-full p-2 border rounded-md bg-gray-100">
+            <div class="mt-1 block w-full p-2 border rounded bg-gray-100">
               {{ userDetails.last_name }}
             </div>
           </div>
@@ -42,7 +42,7 @@
             <label for="dob" class="block text-sm font-medium text-gray-700">
               Date of Birth
             </label>
-            <div class="mt-1 block w-full p-2 border rounded-md bg-gray-100">
+            <div class="mt-1 block w-full p-2 border rounded bg-gray-100">
               {{ userDetails.dob }}
             </div>
           </div>
@@ -51,7 +51,7 @@
             <label for="gender" class="block text-sm font-medium text-gray-700">
               Gender
             </label>
-            <div class="mt-1 block w-full p-2 border rounded-md bg-gray-100">
+            <div class="mt-1 block w-full p-2 border rounded bg-gray-100">
               {{ userDetails.gender }}
             </div>
           </div>
@@ -63,7 +63,7 @@
             >
               Address
             </label>
-            <div class="mt-1 block w-full p-2 border rounded-md bg-gray-100">
+            <div class="mt-1 block w-full p-2 border rounded bg-gray-100">
               {{ userDetails.address }}
             </div>
           </div>
@@ -72,7 +72,7 @@
             <label for="phone" class="block text-sm font-medium text-gray-700">
               Phone
             </label>
-            <div class="mt-1 block w-full p-2 border rounded-md bg-gray-100">
+            <div class="mt-1 block w-full p-2 border rounded bg-gray-100">
               {{ userDetails.phone }}
             </div>
           </div>
@@ -90,7 +90,7 @@
             >
               Artist Name
             </label>
-            <div class="mt-1 block w-full p-2 border rounded-md bg-gray-100">
+            <div class="mt-1 block w-full p-2 border rounded bg-gray-100">
               {{ artistDetails.name }}
             </div>
           </div>
@@ -102,7 +102,7 @@
             >
               First Release Year
             </label>
-            <div class="mt-1 block w-full p-2 border rounded-md bg-gray-100">
+            <div class="mt-1 block w-full p-2 border rounded bg-gray-100">
               {{ artistDetails.first_release_year }}
             </div>
           </div>
@@ -114,7 +114,7 @@
             >
               Number of Albums Released
             </label>
-            <div class="mt-1 block w-full p-2 border rounded-md bg-gray-100">
+            <div class="mt-1 block w-full p-2 border rounded bg-gray-100">
               {{ artistDetails.no_of_albums_released }}
             </div>
           </div>
@@ -128,7 +128,7 @@
           <label for="email" class="block text-sm font-medium text-gray-700">
             Email
           </label>
-          <div class="mt-1 block w-full p-2 border rounded-md bg-gray-100">
+          <div class="mt-1 block w-full p-2 border rounded bg-gray-100">
             {{ userDetails.email }}
           </div>
         </div>

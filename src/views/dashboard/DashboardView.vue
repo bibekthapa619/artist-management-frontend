@@ -1,6 +1,6 @@
 <template>
   <div class="">
-    <div class="bg-white p-8 rounded-lg shadow-lg w-full max-w-lg">
+    <div class="bg-white p-8 rounded shadow-lg w-full max-w-lg">
       <h1 class="text-3xl font-bold text-center mb-4">
         Welcome to the Artist Management System
       </h1>

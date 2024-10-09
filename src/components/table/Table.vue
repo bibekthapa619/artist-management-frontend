@@ -1,5 +1,5 @@
 <template>
-  <table class="min-w-full bg-white shadow-md rounded-lg">
+  <table class="min-w-full bg-white shadow-md rounded">
     <thead class="bg-white text-gray">
       <tr>
         <th
@@ -58,7 +58,7 @@
             </button>
             <div
               v-if="selectedId === row.id"
-              class="absolute right-0 w-48 mt-1 bg-white shadow-lg rounded-md z-10 border border-gray-200"
+              class="absolute right-0 w-48 mt-1 bg-white shadow-lg rounded z-10 border border-gray-200"
             >
               <TableOptions :options="options" :argument="row"></TableOptions>
             </div>

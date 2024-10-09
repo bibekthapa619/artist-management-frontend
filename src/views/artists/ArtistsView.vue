@@ -9,14 +9,14 @@
         id="options-dropdown"
       >
         <button
-          class="bg-indigo-700 text-white px-4 py-2 h-10 rounded-lg shadow hover:bg-indigo-800 flex items-center justify-center"
+          class="bg-indigo-700 text-white px-4 py-2 h-10 rounded shadow hover:bg-indigo-800 flex items-center justify-center"
         >
           Options <i class="fas fa-caret-down ml-2"></i>
         </button>
 
         <div
           v-if="isDropdownOpen"
-          class="absolute left-0 mt-2 w-48 bg-white border border-gray-200 rounded-lg shadow-lg z-10"
+          class="absolute left-0 mt-2 w-48 bg-white border border-gray-200 rounded shadow-lg z-10"
         >
           <router-link
             to="/artists/create"

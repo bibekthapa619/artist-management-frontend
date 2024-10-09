@@ -1,6 +1,6 @@
 <template>
   <div class="flex items-center justify-center min-h-screen bg-gray-100 p-4">
-    <div class="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
+    <div class="bg-white p-8 rounded shadow-lg w-full max-w-md">
       <h2 class="text-2xl font-semibold text-center mb-6">Signup</h2>
 
       <form @submit.prevent="handleSubmit">
@@ -14,7 +14,7 @@
             id="first_name"
             v-model="signupData.first_name"
             type="text"
-            class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:border-blue-300"
+            class="mt-1 block w-full p-2 border border-gray-300 rounded shadow-sm focus:outline-none focus:ring focus:border-blue-300"
             required
           />
           <p v-if="fieldErrors.first_name" class="text-red-500 text-sm">
@@ -30,7 +30,7 @@
             id="last_name"
             v-model="signupData.last_name"
             type="text"
-            class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:border-blue-300"
+            class="mt-1 block w-full p-2 border border-gray-300 rounded shadow-sm focus:outline-none focus:ring focus:border-blue-300"
             required
           />
           <p v-if="fieldErrors.last_name" class="text-red-500 text-sm">
@@ -46,7 +46,7 @@
             id="email"
             v-model="signupData.email"
             type="email"
-            class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:border-blue-300"
+            class="mt-1 block w-full p-2 border border-gray-300 rounded shadow-sm focus:outline-none focus:ring focus:border-blue-300"
             required
           />
           <p v-if="fieldErrors.email" class="text-red-500 text-sm">
@@ -62,7 +62,7 @@
             id="password"
             v-model="signupData.password"
             type="password"
-            class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:border-blue-300"
+            class="mt-1 block w-full p-2 border border-gray-300 rounded shadow-sm focus:outline-none focus:ring focus:border-blue-300"
             required
           />
           <p v-if="fieldErrors.password" class="text-red-500 text-sm">

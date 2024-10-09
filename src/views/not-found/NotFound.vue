@@ -12,7 +12,7 @@
 
     <router-link
       to="/"
-      class="mt-6 inline-block px-4 py-2 bg-indigo-700 text-white rounded-lg shadow hover:bg-indigo-700 transition duration-300"
+      class="mt-6 inline-block px-4 py-2 bg-indigo-700 text-white rounded shadow hover:bg-indigo-700 transition duration-300"
     >
       Go Home
     </router-link>

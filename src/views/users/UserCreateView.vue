@@ -9,7 +9,7 @@
     </nav>
     <h1 class="text-2xl font-bold mb-4">Create User</h1>
 
-    <div class="bg-white shadow-md rounded-lg p-6">
+    <div class="bg-white shadow-md rounded p-6">
       <form @submit.prevent="submitForm">
         <div class="mb-6">
           <h2 class="text-xl font-semibold mb-4">User Details</h2>
@@ -25,7 +25,7 @@
                 id="first_name"
                 v-model="userDetails.first_name"
                 type="text"
-                class="mt-1 block w-full p-2 border rounded-md"
+                class="mt-1 block w-full p-2 border rounded"
                 :class="{ 'border-red-500': errors.first_name }"
                 required
               />
@@ -43,7 +43,7 @@
                 id="last_name"
                 v-model="userDetails.last_name"
                 type="text"
-                class="mt-1 block w-full p-2 border rounded-md"
+                class="mt-1 block w-full p-2 border rounded"
                 :class="{ 'border-red-500': errors.last_name }"
                 required
               />
@@ -60,7 +60,7 @@
                 id="dob"
                 v-model="userDetails.dob"
                 type="date"
-                class="mt-1 block w-full p-2 border rounded-md"
+                class="mt-1 block w-full p-2 border rounded"
                 :class="{ 'border-red-500': errors.dob }"
                 required
               />
@@ -76,7 +76,7 @@
               <select
                 v-model="userDetails.gender"
                 @change="validateField('gender')"
-                class="mt-1 block w-full p-2 border rounded-md"
+                class="mt-1 block w-full p-2 border rounded"
                 :class="{ 'border-red-500': errors.gender }"
                 required
               >
@@ -100,7 +100,7 @@
                 id="address"
                 v-model="userDetails.address"
                 type="text"
-                class="mt-1 block w-full p-2 border rounded-md"
+                class="mt-1 block w-full p-2 border rounded"
                 :class="{ 'border-red-500': errors.address }"
                 required
               />
@@ -117,7 +117,7 @@
                 id="phone"
                 v-model="userDetails.phone"
                 type="tel"
-                class="mt-1 block w-full p-2 border rounded-md"
+                class="mt-1 block w-full p-2 border rounded"
                 :class="{ 'border-red-500': errors.phone }"
                 required
               />
@@ -134,7 +134,7 @@
                 id="role"
                 v-model="userDetails.role"
                 @change="validateField('role')"
-                class="mt-1 block w-full p-2 border rounded-md"
+                class="mt-1 block w-full p-2 border rounded"
                 :class="{ 'border-red-500': errors.role }"
                 required
               >
@@ -162,7 +162,7 @@
                   id="artist_name"
                   v-model="artistDetails.name"
                   type="text"
-                  class="mt-1 block w-full p-2 border rounded-md"
+                  class="mt-1 block w-full p-2 border rounded"
                   :class="{ 'border-red-500': errors.name }"
                   required
                 />
@@ -181,7 +181,7 @@
                   id="first_release_year"
                   v-model="artistDetails.first_release_year"
                   type="number"
-                  class="mt-1 block w-full p-2 border rounded-md"
+                  class="mt-1 block w-full p-2 border rounded"
                   :class="{ 'border-red-500': errors.first_release_year }"
                   required
                 />
@@ -203,7 +203,7 @@
                   id="no_of_albums_released"
                   v-model="artistDetails.no_of_albums_released"
                   type="number"
-                  class="mt-1 block w-full p-2 border rounded-md"
+                  class="mt-1 block w-full p-2 border rounded"
                   :class="{ 'border-red-500': errors.no_of_albums_released }"
                   required
                 />
@@ -228,7 +228,7 @@
               id="email"
               v-model="userDetails.email"
               type="email"
-              class="mt-1 block w-full p-2 border rounded-md"
+              class="mt-1 block w-full p-2 border rounded"
               :class="{ 'border-red-500': errors.email }"
               required
             />
@@ -247,7 +247,7 @@
               id="password"
               v-model="userDetails.password"
               type="password"
-              class="mt-1 block w-full p-2 border rounded-md"
+              class="mt-1 block w-full p-2 border rounded"
               :class="{ 'border-red-500': errors.password }"
               required
             />
@@ -260,7 +260,7 @@
         <button
           type="submit"
           :disabled="loading"
-          class="bg-indigo-700 text-white px-4 py-2 rounded-lg shadow hover:bg-indigo-800 transition duration-300"
+          class="bg-indigo-700 text-white px-4 py-2 rounded shadow hover:bg-indigo-800 transition duration-300"
         >
           <span v-if="loading">Creating...</span>
           <span v-else>Save</span>

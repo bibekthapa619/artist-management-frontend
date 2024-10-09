@@ -3,7 +3,7 @@
     <div
       v-for="(artist, index) in artists"
       :key="artist.id"
-      class="bg-white shadow-lg rounded-lg p-6 mb-6 transition-transform transform hover:scale-105 relative border border-gray-200"
+      class="bg-white shadow-lg rounded p-6 mb-6 transition-transform transform hover:scale-105 relative border border-gray-200"
     >
       <div
         class="flex justify-between items-center mb-4"
@@ -18,7 +18,7 @@
           </button>
           <div
             v-if="selectedId === artist.id"
-            class="absolute right-0 w-48 mt-1 bg-white shadow-lg rounded-md z-10 border border-gray-200"
+            class="absolute right-0 w-48 mt-1 bg-white shadow-lg rounded z-10 border border-gray-200"
           >
             <TableOptions :options="options" :argument="artist"></TableOptions>
           </div>
