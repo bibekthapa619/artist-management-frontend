@@ -26,10 +26,10 @@
 <script lang="ts" setup>
 import { createArtist } from "@/api/artists";
 import type { ArtistFields, UserFields } from "@/types/api/users";
-import { AxiosError } from "axios";
 import { ref } from "vue";
 import { useRouter } from "vue-router";
 import UserForm from "@/components/forms/UserForm.vue";
+import { useAxiosErrorHandler } from "@/lib/errorHandler/axiosErrorHandler";
 
 const userDetails = ref<UserFields>({
   first_name: "",
@@ -52,6 +52,7 @@ const artistDetails = ref<ArtistFields>({
 const errors = ref<{ [key: string]: string }>({});
 const loading = ref(false);
 const router = useRouter();
+const { handleError } = useAxiosErrorHandler(errors);
 
 function validateField(field: keyof UserFields | keyof ArtistFields) {
   errors.value = {};
@@ -90,26 +91,7 @@ const submitForm = async () => {
     });
     router.push("/artists");
   } catch (error) {
-    console.error(error);
-    if (error instanceof AxiosError && error.response) {
-      const fieldErrors = error.response.data.errors || {};
-
-      errors.value = {
-        first_name: fieldErrors?.first_name?.[0] || "",
-        last_name: fieldErrors?.last_name?.[0] || "",
-        dob: fieldErrors?.dob?.[0] || "",
-        gender: fieldErrors?.gender?.[0] || "",
-        address: fieldErrors?.address?.[0] || "",
-        phone: fieldErrors?.phone?.[0] || "",
-        role: fieldErrors?.role?.[0] || "",
-        email: fieldErrors?.email?.[0] || "",
-        password: fieldErrors?.password?.[0] || "",
-
-        artist_name: fieldErrors?.name?.[0] || "",
-        first_release_year: fieldErrors?.first_release_year?.[0] || "",
-        no_of_albums_released: fieldErrors?.no_of_albums_released?.[0] || "",
-      };
-    }
+    handleError(error);
   } finally {
     loading.value = false;
   }

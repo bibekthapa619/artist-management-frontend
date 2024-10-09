@@ -27,9 +27,9 @@
 import { onMounted, ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import type { ArtistFields, UserFields } from "@/types/api/users";
-import { AxiosError } from "axios";
 import { getArtistById, updateArtist } from "@/api/artists";
 import UserForm from "@/components/forms/UserForm.vue";
+import { useAxiosErrorHandler } from "@/lib/errorHandler/axiosErrorHandler";
 
 const userDetails = ref<UserFields>({
   id: 0,
@@ -52,6 +52,7 @@ const artistDetails = ref<ArtistFields>({
 
 const route = useRoute();
 const userId: string | string[] = route.params.id;
+const router = useRouter();
 
 onMounted(async () => {
   loading.value = true;
@@ -68,7 +69,7 @@ onMounted(async () => {
 
 const errors = ref<{ [key: string]: string }>({});
 const loading = ref(false);
-const router = useRouter();
+const { handleError } = useAxiosErrorHandler(errors);
 
 function validateField(field: keyof UserFields) {
   const value = userDetails.value[field];
@@ -96,20 +97,7 @@ const submitForm = async () => {
     });
     router.push("/artists");
   } catch (error) {
-    console.error(error);
-    if (error instanceof AxiosError && error.response) {
-      const fieldErrors = error.response.data.errors || {};
-
-      errors.value = {
-        first_name: fieldErrors?.first_name?.[0] || "",
-        last_name: fieldErrors?.last_name?.[0] || "",
-        dob: fieldErrors?.dob?.[0] || "",
-        gender: fieldErrors?.gender?.[0] || "",
-        address: fieldErrors?.address?.[0] || "",
-        phone: fieldErrors?.phone?.[0] || "",
-        email: fieldErrors?.email?.[0] || "",
-      };
-    }
+    handleError(error);
   } finally {
     loading.value = false;
   }

@@ -35,7 +35,7 @@
         <div class="text-center mt-4">
           <button
             type="submit"
-            class="w-full bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 focus:outline-none focus:ring focus:border-blue-300 transition duration-200 ease-in-out"
+            class="w-full bg-indigo-700 text-white py-2 px-4 rounded hover:bg-blue-600 focus:outline-none focus:ring focus:border-blue-300 transition duration-200 ease-in-out"
             :disabled="isLoading"
           >
             <span
@@ -50,7 +50,7 @@
         </div>
 
         <div class="mt-4 text-center underline">
-          <router-link to="/signup" class="text-blue-600 hover:text-blue-800"
+          <router-link to="/signup" class="text-indigo-700 hover:text-blue-800"
             >Don't have an account? Signup</router-link
           >
         </div>

@@ -114,10 +114,14 @@ const authRoutes = [
           roles: ["super_admin", "artist_manager"],
         },
       },
-
+      {
+        path: "/404",
+        name: "not-found",
+        component: NotFound,
+      },
       {
         path: "/:catchAll(.*)",
-        name: "NotFound",
+        name: "NoPath",
         component: NotFound,
       },
     ],

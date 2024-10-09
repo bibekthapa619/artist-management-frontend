@@ -55,7 +55,7 @@ const initializeApp = async () => {
   app.use(router);
 };
 
-const handleAuthenticationFailure = () => {
+export const handleAuthenticationFailure = () => {
   const userStore = useUserStore();
   userStore.clearUser();
   clearCookie("token");
