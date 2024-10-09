@@ -1,6 +1,8 @@
 <template>
   <div class="flex h-screen bg-gray-100">
-    <Sidebar :isSidebarOpen="isSidebarOpen" :closeSidebar="closeSidebar" />
+    <div>
+      <Sidebar :isSidebarOpen="isSidebarOpen" :closeSidebar="closeSidebar" />
+    </div>
     <div class="flex-1 flex flex-col">
       <Navbar :toggleSidebar="toggleSidebar" />
       <main class="flex-1 p-6 overflow-y-auto">
