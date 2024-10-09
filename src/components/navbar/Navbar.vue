@@ -1,5 +1,7 @@
 <template>
-  <nav class="bg-white shadow-md p-4 flex justify-between items-center">
+  <nav
+    class="bg-white shadow-md py-4 px-6 xl:px-12 flex justify-between items-center"
+  >
     <button
       @click="toggleSidebar"
       class="lg:hidden text-gray-600 hover:bg-gray-200 rounded"

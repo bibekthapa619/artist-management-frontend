@@ -5,7 +5,7 @@
     </div>
     <div class="flex-1 flex flex-col">
       <Navbar :toggleSidebar="toggleSidebar" />
-      <main class="flex-1 p-6 overflow-y-auto xl:px-20">
+      <main class="flex-1 p-6 overflow-y-auto xl:px-12">
         <router-view></router-view>
       </main>
     </div>
