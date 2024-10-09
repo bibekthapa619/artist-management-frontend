@@ -10,11 +10,17 @@ import { clearCookie } from "@/lib/cookies/cookies";
 import axios from "axios";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import type { MeApiResponseSuccess } from "./types/api/auth";
+import Vue3Toastify, { toast, type ToastContainerOptions } from "vue3-toastify";
+import "vue3-toastify/dist/index.css";
 
 const pinia = createPinia();
 const app = createApp(App);
 
 app.use(pinia);
+app.use(Vue3Toastify, {
+  autoClose: 1000,
+  position: toast.POSITION.BOTTOM_RIGHT,
+} as ToastContainerOptions);
 app.mount("#app");
 
 const initializeApp = async () => {
@@ -53,6 +59,18 @@ const handleAuthenticationFailure = () => {
   const userStore = useUserStore();
   userStore.clearUser();
   clearCookie("token");
+};
+
+export const notifySuccess = (text: string) => {
+  toast(text, {
+    type: "success",
+  });
+};
+
+export const notifyError = (text: string) => {
+  toast(text, {
+    type: "error",
+  });
 };
 
 initializeApp();
