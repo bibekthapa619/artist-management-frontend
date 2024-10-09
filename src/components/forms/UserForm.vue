@@ -270,7 +270,4 @@ interface Props {
 }
 
 const { userDetails, artistDetails, errors, submitForm } = defineProps<Props>();
-const emit = defineEmits<{
-  (e: "submit"): void;
-}>();
 </script>

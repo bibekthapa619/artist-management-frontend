@@ -129,6 +129,10 @@ const options: TableOption[] = [
     action: viewArtist,
   },
   {
+    title: "Music",
+    action: viewArtist,
+  },
+  {
     title: "Edit",
     action: editArtist,
   },

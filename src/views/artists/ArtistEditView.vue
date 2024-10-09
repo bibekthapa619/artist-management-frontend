@@ -58,9 +58,7 @@ onMounted(async () => {
   try {
     const res = await getArtistById(userId as string);
     userDetails.value = res.data.user;
-    if (res.data.user.role === "artist") {
-      artistDetails.value = res.data.artist;
-    }
+    artistDetails.value = res.data.artist;
   } catch (error) {
     console.error(error);
   } finally {

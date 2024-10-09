@@ -1,13 +1,13 @@
 <template>
   <div class="">
     <nav class="text-sm mb-4">
-      <router-link to="/users" class="text-indigo-600 hover:underline"
-        >Users</router-link
+      <router-link to="/artists" class="text-indigo-600 hover:underline"
+        >Artists</router-link
       >
       <span class="mx-2">/</span>
       <span>Details</span>
     </nav>
-    <h1 class="text-2xl font-bold mb-4">User Details</h1>
+    <h1 class="text-2xl font-bold mb-4">Artist Details</h1>
 
     <UserDetails
       :userDetails="userDetails"
@@ -19,9 +19,9 @@
 <script lang="ts" setup>
 import { onMounted, ref } from "vue";
 import { useRoute } from "vue-router";
-import { getUserById } from "@/api/users";
 import type { ArtistFields, UserFields } from "@/types/api/users";
 import UserDetails from "@/components/userDetails/UserDetails.vue";
+import { getArtistById } from "@/api/artists";
 
 const userDetails = ref<UserFields>({
   id: 0,
@@ -47,11 +47,9 @@ const userId: string | string[] = route.params.id;
 
 onMounted(async () => {
   try {
-    const res = await getUserById(userId as string);
+    const res = await getArtistById(userId as string);
     userDetails.value = res.data.user;
-    if (res.data.user.role === "artist") {
-      artistDetails.value = res.data.artist;
-    }
+    artistDetails.value = res.data.artist;
   } catch (error) {
     console.error(error);
   }
