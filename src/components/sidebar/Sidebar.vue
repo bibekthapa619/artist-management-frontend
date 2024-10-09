@@ -2,9 +2,9 @@
   <aside
     class="h-screen bg-indigo-700 w-64 shadow-lg lg:block transition-transform duration-300 ease-in-out z-10"
     :class="{
-      absolute: windowWidth < 1280,
+      absolute: windowWidth < 1024,
       'translate-x-0': isSidebarOpen,
-      '-translate-x-64': !isSidebarOpen && windowWidth < 1280,
+      '-translate-x-64': !isSidebarOpen && windowWidth < 1024,
     }"
   >
     <div class="">
@@ -12,7 +12,7 @@
         <h2 class="text-xl text-white font-semibold p-4">Artist Management</h2>
         <button
           @click="closeSidebar"
-          class="fixed right-0 p-4 text-white hover:text-gray-900 xl:hidden"
+          class="fixed right-0 p-4 text-white hover:text-gray-900 lg:hidden"
         >
           <i class="fas fa-times"></i>
         </button>

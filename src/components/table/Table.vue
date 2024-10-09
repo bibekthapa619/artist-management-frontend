@@ -3,19 +3,19 @@
     <thead class="bg-white text-gray">
       <tr>
         <th
-          class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider"
+          class="px-2 py-1 sm:px-3 sm:py-2 md:px-4 md:py-3 lg:px-4 lg:py-4 text-left text-xs font-medium uppercase tracking-wider"
         >
           SN
         </th>
         <th
           v-for="(header, index) in headers"
           :key="index"
-          class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider"
+          class="px-2 py-1 sm:px-3 sm:py-2 md:px-4 md:py-3 lg:px-4 lg:py-4 text-left text-xs font-medium uppercase tracking-wider"
         >
           {{ header.title }}
         </th>
         <th
-          class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider"
+          class="px-2 py-1 sm:px-3 sm:py-2 md:px-4 md:py-3 lg:px-4 lg:py-4 text-left text-xs font-medium uppercase tracking-wider"
           v-if="options && options.length > 0"
         >
           Actions
@@ -28,7 +28,9 @@
         :key="row.id"
         class="hover:bg-gray-100 transition-colors duration-200"
       >
-        <td class="px-6 py-4 border-b border-gray-200">
+        <td
+          class="px-2 py-1 sm:px-3 sm:py-2 md:px-4 md:py-3 lg:px-4 lg:py-4 border-b border-gray-200"
+        >
           {{
             paginationData
               ? (paginationData.current_page - 1) * paginationData.page_size +
@@ -40,12 +42,12 @@
         <td
           v-for="(header, index) in headers"
           :key="`${row.id - index}`"
-          class="px-6 py-4 border-b border-gray-200"
+          class="px-2 py-1 sm:px-3 sm:py-2 md:px-4 md:py-3 lg:px-4 lg:py-4 border-b border-gray-200"
         >
           {{ row[header.key] }}
         </td>
         <td
-          class="px-6 py-4 border-b border-gray-200"
+          class="px-2 py-1 sm:px-3 sm:py-2 md:px-4 md:py-3 lg:px-4 lg:py-4 border-b border-gray-200"
           v-if="options && options.length > 0"
           :id="`table-options-${row.id}`"
         >
