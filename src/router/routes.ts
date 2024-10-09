@@ -11,6 +11,7 @@ import ArtistsView from "@/views/artists/ArtistsView.vue";
 import ArtistCreateView from "@/views/artists/ArtistCreateView.vue";
 import ArtistEditView from "@/views/artists/ArtistEditView.vue";
 import ArtistShowView from "@/views/artists/ArtistShowView.vue";
+import ArtistImportView from "@/views/artists/ArtistImportView.vue";
 
 const guestRoutes = [
   {
@@ -98,6 +99,14 @@ const authRoutes = [
         },
       },
       {
+        path: "artists/import",
+        name: "artists.import",
+        component: ArtistImportView,
+        meta: {
+          roles: ["artist_manager"],
+        },
+      },
+      {
         path: "artists/:id",
         name: "artists.show",
         component: ArtistShowView,
@@ -105,6 +114,7 @@ const authRoutes = [
           roles: ["super_admin", "artist_manager"],
         },
       },
+
       {
         path: "/:catchAll(.*)",
         name: "NotFound",

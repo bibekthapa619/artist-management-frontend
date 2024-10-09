@@ -30,13 +30,12 @@
           >
             Create
           </router-link>
-          <a
-            href="#"
-            @click.prevent="handleOptionClick('import')"
+          <router-link
+            to="/artists/import"
             class="block px-4 py-2 text-gray-800 hover:bg-indigo-700 hover:text-white"
           >
             Import
-          </a>
+          </router-link>
           <a
             href="#"
             @click.prevent="handleOptionClick('export')"
