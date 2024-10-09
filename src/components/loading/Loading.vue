@@ -1,6 +1,6 @@
 <template>
   <div class="fixed inset-0 flex flex-col items-center justify-center bg-white">
-    <h1 class="text-3xl font-bold text-indigo-700 mb-6">Artist Management</h1>
+    <h1 class="text-3xl font-bold text-primary mb-6">Artist Management</h1>
 
     <div class="flex space-x-1 h-4">
       <span

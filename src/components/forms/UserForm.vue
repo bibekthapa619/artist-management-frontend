@@ -247,7 +247,7 @@
     <button
       type="submit"
       :disabled="loading"
-      class="bg-indigo-700 text-white px-4 py-2 rounded shadow hover:bg-indigo-800 transition duration-300"
+      class="bg-primary text-white px-4 py-2 rounded shadow hover:bg-primary-hover transition duration-300"
     >
       <span v-if="loading">Creating...</span>
       <span v-else>Save</span>

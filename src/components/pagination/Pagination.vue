@@ -7,7 +7,7 @@
       <button
         @click="prevPage"
         :disabled="pagination.current_page === 1"
-        class="px-2 sm:px-3 py-1 sm:py-2 text-indigo-500 bg-white rounded border shadow-md hover:bg-indigo-700 hover:text-white flex items-center text-sm sm:text-base"
+        class="px-2 sm:px-3 py-1 sm:py-2 text-primary bg-white rounded border shadow-md hover:bg-primary hover:text-white flex items-center text-sm sm:text-base"
         v-if="pagination.current_page > 1"
       >
         &lt;
@@ -17,10 +17,10 @@
         @click="changePage(1)"
         :class="
           pagination.current_page === 1
-            ? 'bg-indigo-700 text-white '
-            : 'bg-white text-indigo-500 border'
+            ? 'bg-primary text-white '
+            : 'bg-white text-primary border'
         "
-        class="px-2 sm:px-3 py-1 sm:py-2 rounded shadow-md hover:bg-indigo-700 hover:text-white text-sm sm:text-base"
+        class="px-2 sm:px-3 py-1 sm:py-2 rounded shadow-md hover:bg-primary hover:text-white text-sm sm:text-base"
       >
         1
       </button>
@@ -37,9 +37,9 @@
         :key="page"
         @click="changePage(page)"
         :class="{
-          'bg-indigo-700 text-white': pagination.current_page === page,
-          'bg-white text-indigo-500 border': pagination.current_page !== page,
-          'rounded hover:bg-indigo-700 hover:text-white shadow-md': true,
+          'bg-primary text-white': pagination.current_page === page,
+          'bg-white text-primary border': pagination.current_page !== page,
+          'rounded hover:bg-primary hover:text-white shadow-md': true,
         }"
         class="px-2 sm:px-3 py-1 sm:py-2 text-sm sm:text-base"
       >
@@ -57,10 +57,10 @@
         @click="changePage(pagination.last_page)"
         :class="
           pagination.current_page === pagination.last_page
-            ? 'bg-indigo-700 text-white '
-            : 'bg-white text-indigo-500 border '
+            ? 'bg-primary text-white '
+            : 'bg-white text-primary border '
         "
-        class="px-2 sm:px-3 py-1 sm:py-2 shadow-md rounded hover:bg-indigo-700 hover:text-white text-sm sm:text-base"
+        class="px-2 sm:px-3 py-1 sm:py-2 shadow-md rounded hover:bg-primary hover:text-white text-sm sm:text-base"
       >
         {{ pagination.last_page }}
       </button>
@@ -68,7 +68,7 @@
       <button
         @click="nextPage"
         :disabled="pagination.current_page === pagination.last_page"
-        class="px-2 sm:px-3 py-1 sm:py-2 bg-white text-indigo-500 rounded border shadow-md hover:bg-indigo-700 hover:text-white flex items-center text-sm sm:text-base"
+        class="px-2 sm:px-3 py-1 sm:py-2 bg-white text-primary rounded border shadow-md hover:bg-primary hover:text-white flex items-center text-sm sm:text-base"
         v-if="pagination.current_page < pagination.last_page"
       >
         &gt;

@@ -34,12 +34,12 @@
       </div>
 
       <div class="mb-2 flex items-center">
-        <i class="fas fa-envelope mr-2 text-indigo-600"></i>
+        <i class="fas fa-envelope mr-2 text-primary"></i>
         <span class="text-gray-800">{{ user.email }}</span>
       </div>
 
       <div class="mb-2 flex items-center">
-        <i class="fas fa-phone mr-2 text-indigo-600"></i>
+        <i class="fas fa-phone mr-2 text-primary"></i>
         <span class="text-gray-800">{{ user.phone }}</span>
       </div>
 

@@ -15,7 +15,7 @@
         v-if="user && user.role == 'artist_manager'"
       >
         <button
-          class="bg-indigo-700 text-white px-4 py-2 h-10 rounded shadow hover:bg-indigo-800 flex items-center justify-center"
+          class="bg-primary text-white px-4 py-2 h-10 rounded shadow hover:bg-primary-hover flex items-center justify-center"
         >
           Options <i class="fas fa-caret-down ml-2"></i>
         </button>
@@ -26,20 +26,20 @@
         >
           <router-link
             to="/artists/create"
-            class="block px-4 py-2 text-gray-800 hover:bg-indigo-700 hover:text-white"
+            class="block px-4 py-2 text-gray-800 hover:bg-primary hover:text-white"
           >
             Create
           </router-link>
           <router-link
             to="/artists/import"
-            class="block px-4 py-2 text-gray-800 hover:bg-indigo-700 hover:text-white"
+            class="block px-4 py-2 text-gray-800 hover:bg-primary hover:text-white"
           >
             Import
           </router-link>
           <a
             href="#"
             @click.prevent="handleOptionClick('export')"
-            class="block px-4 py-2 text-gray-800 hover:bg-indigo-700 hover:text-white"
+            class="block px-4 py-2 text-gray-800 hover:bg-primary hover:text-white"
           >
             Export
           </a>

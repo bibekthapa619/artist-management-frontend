@@ -10,7 +10,7 @@
       />
       <router-link
         to="/users/create"
-        class="bg-indigo-700 text-white px-4 py-2 h-10 rounded shadow hover:bg-indigo-800 flex items-center justify-center"
+        class="bg-primary text-white px-4 py-2 h-10 rounded shadow hover:bg-primary-hover flex items-center justify-center"
       >
         Create
       </router-link>

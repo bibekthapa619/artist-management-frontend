@@ -1,6 +1,6 @@
 <template>
   <aside
-    class="h-screen bg-indigo-700 w-64 shadow-lg lg:block transition-transform duration-300 ease-in-out z-10"
+    class="h-screen bg-primary w-64 shadow-lg lg:block transition-transform duration-300 ease-in-out z-10"
     :class="{
       absolute: windowWidth < 1024,
       'translate-x-0': isSidebarOpen,
