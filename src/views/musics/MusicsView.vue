@@ -1,30 +1,32 @@
 <template>
   <div class="">
-    <h1 class="text-2xl font-bold mb-4">Users</h1>
-
+    <h1 class="text-2xl font-bold mb-4">Musics</h1>
     <div class="flex justify-between items-center mb-4 space-x-4">
       <SearchInput
         v-model:searchQuery="searchQuery"
         class="w-48 sm:w-64"
-        :placeholder="`Search users...`"
+        :placeholder="`Search music...`"
       />
       <router-link
-        to="/users/create"
+        to="/musics/create"
         class="bg-primary text-white px-4 py-2 h-10 rounded shadow hover:bg-primary-hover flex items-center justify-center"
       >
-        Create
+        Add
       </router-link>
     </div>
-
-    <div class="hidden md:block">
-      <UserTable
-        :users="users"
+    <div class="hidden sm:block">
+      <ArtistMusicTable
+        :musics="musics"
         :paginationData="paginationData"
         :options="options"
       />
     </div>
-    <div class="block md:hidden">
-      <UserCard v-if="users.length" :users="users" :options="options" />
+    <div class="block sm:hidden">
+      <ArtistMusicCard
+        v-if="musics.length"
+        :musics="musics"
+        :options="options"
+      />
     </div>
     <Pagination
       :pagination="paginationData"
@@ -33,19 +35,19 @@
   </div>
 </template>
 
-<script lang="ts" setup>
-import { ref, onMounted, watch } from "vue";
-import { deleteUserById, getUsers } from "@/api/users";
+<script setup lang="ts">
+import { deleteMusic, getMusics } from "@/api/musics";
 import Pagination from "@/components/pagination/Pagination.vue";
-import type { FormattedUser, PaginationData, User } from "@/types/api/common";
 import SearchInput from "@/components/search/SearchInput.vue";
-import UserCard from "@/sections/users/UserCard.vue";
-import UserTable from "@/sections/users/UserTable.vue";
 import type { TableOption } from "@/components/table/table";
-import { useRouter } from "vue-router";
 import { notifyError, notifySuccess } from "@/main";
+import ArtistMusicCard from "@/sections/artists/ArtistMusicCard.vue";
+import ArtistMusicTable from "@/sections/artists/ArtistMusicTable.vue";
+import type { Music, PaginationData } from "@/types/api/common";
+import { onMounted, ref, watch } from "vue";
+import { useRouter } from "vue-router";
 
-const users = ref<User[]>([]);
+const musics = ref<Music[]>([]);
 const pageSize = ref<number>(10);
 const paginationData = ref<PaginationData>({
   total: 0,
@@ -59,25 +61,19 @@ const searchQuery = ref<string>("");
 const refresh = ref<boolean>(false);
 const router = useRouter();
 
-const viewUser = (user: FormattedUser) => {
+const editMusic = () => {
   router.push({
-    name: "users.show",
-    params: { id: user.id },
+    name: "musics.create",
   });
 };
 
-const editUser = (user: FormattedUser) => {
-  router.push({
-    name: "users.edit",
-    params: { id: user.id },
-  });
-};
-
-const deleteUser = async (user: FormattedUser) => {
-  const isConfirmed = confirm(`Are you sure you want to delete ${user.name}?`);
+const deleteMusicOption = async (music: Music) => {
+  const isConfirmed = confirm(
+    `Are you sure you want to delete ${music.title}?`
+  );
   if (isConfirmed) {
     try {
-      let res = await deleteUserById(user.id);
+      let res = await deleteMusic(music.id as number);
       refresh.value = !refresh.value;
       notifySuccess(res.message);
     } catch (err) {
@@ -85,42 +81,37 @@ const deleteUser = async (user: FormattedUser) => {
     }
   }
 };
-
 const options: TableOption[] = [
   {
-    title: "View",
-    action: viewUser,
-  },
-  {
     title: "Edit",
-    action: editUser,
+    action: editMusic,
   },
   {
     title: "Delete",
-    action: deleteUser,
+    action: deleteMusicOption,
     isDanger: true,
   },
 ];
 
-const fetchUsers = async (page = 1, perPage = pageSize.value, query = "") => {
-  let res = await getUsers(page, perPage, query);
-  users.value = res.data.users;
+const fetchMusic = async (page = 1, perPage = pageSize.value, query = "") => {
+  let res = await getMusics(page, perPage, query);
+  musics.value = res.data.musics;
   paginationData.value = res.data.meta;
 };
 
 watch(searchQuery, (newQuery) => {
-  fetchUsers(1, pageSize.value, newQuery);
+  fetchMusic(1, pageSize.value, newQuery);
 });
 
 watch(refresh, () => {
-  fetchUsers(paginationData.value.current_page, pageSize.value);
+  fetchMusic(paginationData.value.current_page, pageSize.value, "");
 });
 
 onMounted(async () => {
-  await fetchUsers();
+  await fetchMusic();
 });
 
 const updateCurrentPage = async (page: number) => {
-  await fetchUsers(page);
+  await fetchMusic(page);
 };
 </script>

@@ -13,6 +13,8 @@ import ArtistEditView from "@/views/artists/ArtistEditView.vue";
 import ArtistShowView from "@/views/artists/ArtistShowView.vue";
 import ArtistImportView from "@/views/artists/ArtistImportView.vue";
 import ArtistMusicView from "@/views/artists/ArtistMusicView.vue";
+import MusicsView from "@/views/musics/MusicsView.vue";
+import MusicCreateView from "@/views/musics/MusicCreateView.vue";
 
 const guestRoutes = [
   {
@@ -122,6 +124,16 @@ const authRoutes = [
         meta: {
           roles: ["super_admin", "artist_manager"],
         },
+      },
+      {
+        path: "/musics",
+        name: "musics.index",
+        component: MusicsView,
+      },
+      {
+        path: "/musics/create",
+        name: "musics.create",
+        component: MusicCreateView,
       },
       {
         path: "/404",

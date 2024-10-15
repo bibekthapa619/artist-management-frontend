@@ -79,7 +79,7 @@ import { storeToRefs } from "pinia";
 import { notifyError, notifySuccess } from "@/main";
 
 const artists = ref<Artist[]>([]);
-const pageSize = ref<number>(10);
+const pageSize = ref<number>(3);
 const paginationData = ref<PaginationData>({
   total: 0,
   last_page: 0,
@@ -164,7 +164,7 @@ watch(searchQuery, (newQuery) => {
 });
 
 watch(refresh, () => {
-  fetchArtists(1, pageSize.value);
+  fetchArtists(paginationData.value.current_page, pageSize.value);
 });
 
 const toggleDropdown = () => {
