@@ -30,6 +30,7 @@ import { ref } from "vue";
 import { useRouter } from "vue-router";
 import UserForm from "@/components/forms/UserForm.vue";
 import { useAxiosErrorHandler } from "@/lib/errorHandler/axiosErrorHandler";
+import { notifySuccess } from "@/main";
 
 const userDetails = ref<UserFields>({
   first_name: "",
@@ -85,10 +86,12 @@ const submitForm = async () => {
 
   loading.value = true;
   try {
-    await createArtist({
+    let res = await createArtist({
       user: userDetails.value,
       artist: artistDetails.value,
     });
+    notifySuccess(res.message);
+    await new Promise((resolve) => setTimeout(resolve, 2000));
     router.push("/artists");
   } catch (error) {
     handleError(error);

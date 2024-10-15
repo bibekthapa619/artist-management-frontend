@@ -43,6 +43,7 @@ import UserCard from "@/sections/users/UserCard.vue";
 import UserTable from "@/sections/users/UserTable.vue";
 import type { TableOption } from "@/components/table/table";
 import { useRouter } from "vue-router";
+import { notifyError, notifySuccess } from "@/main";
 
 const users = ref<User[]>([]);
 const pageSize = ref<number>(10);
@@ -75,8 +76,13 @@ const editUser = (user: FormattedUser) => {
 const deleteUser = async (user: FormattedUser) => {
   const isConfirmed = confirm(`Are you sure you want to delete ${user.name}?`);
   if (isConfirmed) {
-    await deleteUserById(user.id);
-    refresh.value = !refresh.value;
+    try {
+      let res = await deleteUserById(user.id);
+      refresh.value = !refresh.value;
+      notifySuccess(res.message);
+    } catch (err) {
+      notifyError("Failed to delete.");
+    }
   }
 };
 

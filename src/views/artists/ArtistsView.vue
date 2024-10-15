@@ -79,6 +79,7 @@ import { useRouter } from "vue-router";
 import ArtistCard from "@/sections/artists/ArtistCard.vue";
 import { useUserStore } from "@/store/userStore";
 import { storeToRefs } from "pinia";
+import { notifyError, notifySuccess } from "@/main";
 
 const artists = ref<Artist[]>([]);
 const pageSize = ref<number>(10);
@@ -117,8 +118,14 @@ const deleteArtist = async (artist: Artist) => {
     `Are you sure you want to delete ${artist.name}?`
   );
   if (isConfirmed) {
-    await deleteArtistById(artist.id as number);
-    refresh.value = !refresh.value;
+    try {
+      let res = await deleteArtistById(artist.id as number);
+      refresh.value = !refresh.value;
+      console.log(res);
+      notifySuccess(res.message);
+    } catch (err) {
+      notifyError("Failed to delete.");
+    }
   }
 };
 

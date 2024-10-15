@@ -30,6 +30,7 @@ import type { ArtistFields, UserFields } from "@/types/api/users";
 import { getArtistById, updateArtist } from "@/api/artists";
 import UserForm from "@/components/forms/UserForm.vue";
 import { useAxiosErrorHandler } from "@/lib/errorHandler/axiosErrorHandler";
+import { notifySuccess } from "@/main";
 
 const userDetails = ref<UserFields>({
   id: 0,
@@ -91,10 +92,11 @@ const submitForm = async () => {
 
   loading.value = true;
   try {
-    await updateArtist(artistDetails.value.id as number, {
+    let res = await updateArtist(artistDetails.value.id as number, {
       user: userDetails.value,
       artist: artistDetails.value,
     });
+    notifySuccess(res.message);
     router.push("/artists");
   } catch (error) {
     handleError(error);
