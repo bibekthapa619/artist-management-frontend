@@ -57,3 +57,22 @@ export const exportArtist = async (search = ""): Promise<any> => {
     contentType: "application/json",
   });
 };
+
+export const importArtist = async (file: File): Promise<any> => {
+  let formData = new FormData();
+  formData.append("file", file);
+  return apiClient({
+    url: `/artists/import`,
+    method: "POST",
+    contentType: "multipart/form-data",
+    payload: formData,
+  });
+};
+
+export const getArtistImportSample = async () => {
+  return apiClient({
+    url: `/artists/import-sample`,
+    method: "GET",
+    contentType: "application/json",
+  });
+};
