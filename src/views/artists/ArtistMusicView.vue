@@ -18,7 +18,9 @@
     <div class="hidden sm:block">
       <ArtistMusicTable :musics="musics" :paginationData="paginationData" />
     </div>
-    <div class="block sm:hidden">Mobile view</div>
+    <div class="block sm:hidden">
+      <ArtistMusicCard v-if="musics.length" :musics="musics" />
+    </div>
     <Pagination
       :pagination="paginationData"
       :updateCurrentPage="updateCurrentPage"
@@ -30,6 +32,7 @@
 import { getArtistMusics } from "@/api/artists";
 import Pagination from "@/components/pagination/Pagination.vue";
 import SearchInput from "@/components/search/SearchInput.vue";
+import ArtistMusicCard from "@/sections/artists/ArtistMusicCard.vue";
 import ArtistMusicTable from "@/sections/artists/ArtistMusicTable.vue";
 import type { Music, PaginationData } from "@/types/api/common";
 import { onMounted, ref, watch } from "vue";

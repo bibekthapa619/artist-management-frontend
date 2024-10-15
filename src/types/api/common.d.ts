@@ -35,6 +35,6 @@ export interface PaginationData {
 export interface Music {
   id: number;
   title: string;
-  albumn_name: string;
+  album_name: string;
   genre: string;
 }
