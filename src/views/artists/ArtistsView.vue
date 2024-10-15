@@ -51,9 +51,6 @@
       <ArtistTable
         :artists="artists"
         :paginationData="paginationData"
-        :viewArtist="viewArtist"
-        :editArtist="editArtist"
-        :deleteArtist="deleteArtist"
         :options="options"
       />
     </div>
@@ -106,6 +103,13 @@ const viewArtist = (artist: Artist) => {
   });
 };
 
+const viewMusic = (artist: Artist) => {
+  router.push({
+    name: "artists.music",
+    params: { id: artist.id },
+  });
+};
+
 const editArtist = (artist: Artist) => {
   router.push({
     name: "artists.edit",
@@ -136,7 +140,7 @@ const options: TableOption[] = [
   },
   {
     title: "Music",
-    action: viewArtist,
+    action: viewMusic,
   },
   {
     title: "Edit",

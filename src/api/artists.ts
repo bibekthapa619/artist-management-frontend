@@ -76,3 +76,16 @@ export const getArtistImportSample = async () => {
     contentType: "application/json",
   });
 };
+
+export const getArtistMusics = async (
+  id: string,
+  page = 1,
+  perPage = 1,
+  search = ""
+): Promise<any> => {
+  return apiClient({
+    url: `/artists/${id}/music?page=${page}&per_page=${perPage}&search=${search}`,
+    method: "GET",
+    contentType: "application/json",
+  });
+};

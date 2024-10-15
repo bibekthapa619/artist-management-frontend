@@ -1,0 +1,69 @@
+<template>
+  <div class="">
+    <nav class="text-sm mb-4">
+      <router-link to="/users" class="text-primary hover:underline"
+        >Artists</router-link
+      >
+      <span class="mx-2">/</span>
+      <span>Music</span>
+    </nav>
+    <h1 class="text-2xl font-bold mb-4">Artist Musics</h1>
+    <div class="flex justify-between items-center mb-4 space-x-4">
+      <SearchInput
+        v-model:searchQuery="searchQuery"
+        class="w-48 sm:w-64"
+        :placeholder="`Search music...`"
+      />
+    </div>
+    <div class="hidden sm:block">
+      <ArtistMusicTable :musics="musics" :paginationData="paginationData" />
+    </div>
+    <div class="block sm:hidden">Mobile view</div>
+    <Pagination
+      :pagination="paginationData"
+      :updateCurrentPage="updateCurrentPage"
+    />
+  </div>
+</template>
+
+<script setup lang="ts">
+import { getArtistMusics } from "@/api/artists";
+import Pagination from "@/components/pagination/Pagination.vue";
+import SearchInput from "@/components/search/SearchInput.vue";
+import ArtistMusicTable from "@/sections/artists/ArtistMusicTable.vue";
+import type { Music, PaginationData } from "@/types/api/common";
+import { onMounted, ref, watch } from "vue";
+import { useRoute } from "vue-router";
+
+const musics = ref<Music[]>([]);
+const pageSize = ref<number>(10);
+const paginationData = ref<PaginationData>({
+  total: 0,
+  last_page: 0,
+  current_page: 0,
+  from: 0,
+  to: 0,
+  page_size: 0,
+});
+const searchQuery = ref<string>("");
+const route = useRoute();
+const userId: string | string[] = route.params.id;
+
+const fetchMusic = async (page = 1, perPage = pageSize.value, query = "") => {
+  let res = await getArtistMusics(userId as string, page, perPage, query);
+  musics.value = res.data.musics;
+  paginationData.value = res.data.meta;
+};
+
+watch(searchQuery, (newQuery) => {
+  fetchMusic(1, pageSize.value, newQuery);
+});
+
+onMounted(async () => {
+  await fetchMusic();
+});
+
+const updateCurrentPage = async (page: number) => {
+  await fetchMusic(page);
+};
+</script>

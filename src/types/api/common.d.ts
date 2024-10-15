@@ -31,3 +31,10 @@ export interface PaginationData {
   to: number;
   page_size: number;
 }
+
+export interface Music {
+  id: number;
+  title: string;
+  albumn_name: string;
+  genre: string;
+}
