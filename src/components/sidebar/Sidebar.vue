@@ -9,7 +9,12 @@
   >
     <div class="">
       <div class="flex justify-between items-center">
-        <h2 class="text-xl text-white font-semibold p-4">Artist Management</h2>
+        <router-link
+          to="/"
+          class="text-xl text-white font-semibold p-4 cursor-pointer"
+        >
+          Artist Management
+        </router-link>
         <button
           @click="closeSidebar"
           class="fixed right-0 p-4 text-white hover:text-gray-900 lg:hidden"

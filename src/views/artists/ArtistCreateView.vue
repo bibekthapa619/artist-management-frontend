@@ -91,7 +91,7 @@ const submitForm = async () => {
       artist: artistDetails.value,
     });
     notifySuccess(res.message);
-    await new Promise((resolve) => setTimeout(resolve, 2000));
+    // await new Promise((resolve) => setTimeout(resolve, 2000));
     router.push("/artists");
   } catch (error) {
     handleError(error);

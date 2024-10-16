@@ -2,7 +2,7 @@
   <div class="relative" ref="dropdownRef">
     <button
       @click="toggleSortOptions"
-      class="bg-white text-gray-700 font-medium px-4 py-2 rounded-sm whitespace-nowrap flex items-center space-x-2"
+      class="bg-white text-gray-700 font-medium px-4 py-2 rounded-sm whitespace-nowrap flex items-center space-x-2 hover:bg-gray-200"
     >
       <span>Sort </span>
       <i class="fas fa-chevron-down text-sm"></i>
@@ -10,10 +10,15 @@
 
     <div
       v-if="showSortOptions"
-      class="absolute z-10 mt-1 w-48 bg-white border border-gray-300 rounded-lg shadow-lg p-4"
+      class="absolute z-10 mt-1 w-48 bg-white border border-gray-300 rounded-lg shadow-lg p-2"
     >
-      <div v-for="option in options" :key="option.value">
-        <label @click="selectSort(option.value)" class="cursor-pointer">
+      <div
+        v-for="option in options"
+        :key="option.value"
+        class="cursor-pointer hover:bg-gray-200"
+        @click="selectSort(option.value)"
+      >
+        <label>
           <input type="radio" :value="option.value" v-model="selectedSort" />
           {{ option.label }}
         </label>

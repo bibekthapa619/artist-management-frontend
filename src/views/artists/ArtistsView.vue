@@ -20,20 +20,20 @@
         >
           <router-link
             to="/artists/create"
-            class="block px-4 py-2 text-gray-800 hover:bg-primary hover:text-white"
+            class="block px-4 py-2 text-gray-800 hover:bg-gray-200"
           >
             Create
           </router-link>
           <router-link
             to="/artists/import"
-            class="block px-4 py-2 text-gray-800 hover:bg-primary hover:text-white"
+            class="block px-4 py-2 text-gray-800 hover:bg-gray-200"
           >
             Import
           </router-link>
           <a
             href="#"
             @click.prevent="handleOptionClick('export')"
-            class="block px-4 py-2 text-gray-800 hover:bg-primary hover:text-white"
+            class="block px-4 py-2 text-gray-800 hover:bg-gray-200"
           >
             Export
           </a>
