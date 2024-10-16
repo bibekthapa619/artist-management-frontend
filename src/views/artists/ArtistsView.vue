@@ -1,13 +1,7 @@
 <template>
   <div class="">
-    <h1 class="text-2xl font-bold mb-4">Artists</h1>
-
     <div class="flex justify-between items-center mb-4 space-x-4">
-      <SearchInput
-        v-model:searchQuery="searchQuery"
-        class="w-48 sm:w-64 float-right"
-        :placeholder="`Search artists...`"
-      />
+      <h1 class="text-2xl font-bold mb-4">Artists</h1>
       <div
         class="relative inline-block text-left"
         @click="toggleDropdown"
@@ -46,6 +40,18 @@
         </div>
       </div>
     </div>
+    <div class="flex justify-between items-center mb-4 space-x-4">
+      <SortOptions
+        :options="sortOptions"
+        :modelValue="selectedSort"
+        @update:modelValue="selectedSort = $event"
+      />
+      <SearchInput
+        v-model:searchQuery="searchQuery"
+        class="w-48 sm:w-64 float-right"
+        :placeholder="`Search artists...`"
+      />
+    </div>
 
     <div class="hidden md:block">
       <ArtistTable
@@ -77,9 +83,10 @@ import ArtistCard from "@/sections/artists/ArtistCard.vue";
 import { useUserStore } from "@/store/userStore";
 import { storeToRefs } from "pinia";
 import { notifyError, notifySuccess } from "@/main";
+import SortOptions from "@/components/table/SortOptions.vue";
 
 const artists = ref<Artist[]>([]);
-const pageSize = ref<number>(3);
+const pageSize = ref<number>(10);
 const paginationData = ref<PaginationData>({
   total: 0,
   last_page: 0,
@@ -95,6 +102,14 @@ const isDropdownOpen = ref(false);
 
 const userStore = useUserStore();
 const { user } = storeToRefs(userStore);
+
+const selectedSort = ref("name-asc");
+const sortOptions = [
+  { value: "name-asc", label: "Name(Asc)" },
+  { value: "name-desc", label: "Name(Desc)" },
+  { value: "last-modified", label: "Last Modified" },
+  { value: "date-created", label: "Date Created" },
+];
 
 const viewArtist = (artist: Artist) => {
   router.push({
@@ -153,19 +168,41 @@ const options: TableOption[] = [
   },
 ];
 
-const fetchArtists = async (page = 1, perPage = pageSize.value, query = "") => {
-  let res = await getArtists(page, perPage, query);
+const fetchArtists = async (
+  page = 1,
+  perPage = pageSize.value,
+  query = "",
+  sortBy = sortOptions[0].value
+) => {
+  let res = await getArtists(page, perPage, query, sortBy);
   artists.value = res.data.artists;
   paginationData.value = res.data.meta;
 };
 
 watch(searchQuery, (newQuery) => {
-  fetchArtists(1, pageSize.value, newQuery);
+  fetchArtists(1, pageSize.value, newQuery, selectedSort.value);
 });
 
 watch(refresh, () => {
-  fetchArtists(paginationData.value.current_page, pageSize.value);
+  fetchArtists(
+    paginationData.value.current_page,
+    pageSize.value,
+    selectedSort.value
+  );
 });
+
+watch(selectedSort, (newSort) => {
+  fetchArtists(1, pageSize.value, searchQuery.value, newSort);
+});
+
+const updateCurrentPage = async (page: number) => {
+  await fetchArtists(
+    page,
+    pageSize.value,
+    searchQuery.value,
+    selectedSort.value
+  );
+};
 
 const toggleDropdown = () => {
   isDropdownOpen.value = !isDropdownOpen.value;
@@ -209,8 +246,4 @@ const handleClickOutside = (event: MouseEvent) => {
 onBeforeUnmount(() => {
   document.removeEventListener("click", handleClickOutside);
 });
-
-const updateCurrentPage = async (page: number) => {
-  await fetchArtists(page);
-};
 </script>

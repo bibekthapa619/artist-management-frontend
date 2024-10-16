@@ -4,10 +4,11 @@ import { apiClient } from "./client";
 export const getArtists = async (
   page = 1,
   perPage = 1,
-  search = ""
+  search = "",
+  sortBy = ""
 ): Promise<any> => {
   return apiClient({
-    url: `/artists?page=${page}&per_page=${perPage}&search=${search}`,
+    url: `/artists?page=${page}&per_page=${perPage}&search=${search}&sort_by=${sortBy}`,
     method: "GET",
     contentType: "application/json",
   });
