@@ -12,6 +12,14 @@ export const getMusics = async (
   });
 };
 
+export const getMusicById = async (id: string): Promise<any> => {
+  return apiClient({
+    url: `/musics/${id}`,
+    method: "GET",
+    contentType: "application/json",
+  });
+};
+
 export const createMusic = async (data: any): Promise<any> => {
   return apiClient({
     url: `/musics`,

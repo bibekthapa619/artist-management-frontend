@@ -61,9 +61,10 @@ const searchQuery = ref<string>("");
 const refresh = ref<boolean>(false);
 const router = useRouter();
 
-const editMusic = () => {
+const editMusic = (music: Music) => {
   router.push({
-    name: "musics.create",
+    name: "musics.edit",
+    params: { id: music.id },
   });
 };
 

@@ -15,6 +15,7 @@ import ArtistImportView from "@/views/artists/ArtistImportView.vue";
 import ArtistMusicView from "@/views/artists/ArtistMusicView.vue";
 import MusicsView from "@/views/musics/MusicsView.vue";
 import MusicCreateView from "@/views/musics/MusicCreateView.vue";
+import MusicEditView from "@/views/musics/MusicEditView.vue";
 
 const guestRoutes = [
   {
@@ -134,6 +135,11 @@ const authRoutes = [
         path: "/musics/create",
         name: "musics.create",
         component: MusicCreateView,
+      },
+      {
+        path: "/musics/:id",
+        name: "musics.edit",
+        component: MusicEditView,
       },
       {
         path: "/404",
