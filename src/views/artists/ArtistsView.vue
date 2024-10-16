@@ -187,6 +187,7 @@ watch(refresh, () => {
   fetchArtists(
     paginationData.value.current_page,
     pageSize.value,
+    searchQuery.value,
     selectedSort.value
   );
 });

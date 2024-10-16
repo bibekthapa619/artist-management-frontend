@@ -82,10 +82,11 @@ export const getArtistMusics = async (
   id: string,
   page = 1,
   perPage = 1,
-  search = ""
+  search = "",
+  sortBy = ""
 ): Promise<any> => {
   return apiClient({
-    url: `/artists/${id}/music?page=${page}&per_page=${perPage}&search=${search}`,
+    url: `/artists/${id}/music?page=${page}&per_page=${perPage}&search=${search}&sort_by=${sortBy}`,
     method: "GET",
     contentType: "application/json",
   });

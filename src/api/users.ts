@@ -4,10 +4,11 @@ import { apiClient } from "./client";
 export const getUsers = async (
   page = 1,
   perPage = 1,
-  search = ""
+  search = "",
+  sortBy = ""
 ): Promise<any> => {
   return apiClient({
-    url: `/users?page=${page}&per_page=${perPage}&search=${search}`,
+    url: `/users?page=${page}&per_page=${perPage}&search=${search}&sort_by=${sortBy}`,
     method: "GET",
     contentType: "application/json",
   });
