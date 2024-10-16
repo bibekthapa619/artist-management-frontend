@@ -8,7 +8,7 @@ interface FieldErrors {
 
 type ErrorsType = { value: Record<string, string> } | { value: string[] };
 
-export const useAxiosErrorHandler = (errors: ErrorsType) => {
+export const useAxiosErrorHandler = (errors?: ErrorsType) => {
   const router = useRouter();
 
   const handleError = (error: unknown) => {
@@ -27,7 +27,7 @@ export const useAxiosErrorHandler = (errors: ErrorsType) => {
         return;
       }
 
-      if (error.response.data) {
+      if (errors && error.response.data) {
         if (Array.isArray(fieldErrors)) {
           errors.value = fieldErrors;
         } else {
