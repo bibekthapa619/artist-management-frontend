@@ -58,10 +58,10 @@ const searchQuery = ref<string>("");
 const route = useRoute();
 const userId: string | string[] = route.params.id;
 
-const selectedSort = ref("name-asc");
+const selectedSort = ref("title-asc");
 const sortOptions = [
-  { value: "name-asc", label: "Name(Asc)" },
-  { value: "name-desc", label: "Name(Desc)" },
+  { value: "title-asc", label: "Title(Asc)" },
+  { value: "title-desc", label: "Title(Desc)" },
   { value: "last-modified", label: "Last Modified" },
   { value: "date-created", label: "Date Created" },
 ];
