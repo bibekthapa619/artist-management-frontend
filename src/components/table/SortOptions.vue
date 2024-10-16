@@ -2,9 +2,10 @@
   <div class="relative" ref="dropdownRef">
     <button
       @click="toggleSortOptions"
-      class="bg-white text-gray-700 font-medium px-4 py-2 rounded-sm whitespace-nowrap"
+      class="bg-white text-gray-700 font-medium px-4 py-2 rounded-sm whitespace-nowrap flex items-center space-x-2"
     >
-      Sort By
+      <span>Sort </span>
+      <i class="fas fa-chevron-down text-sm"></i>
     </button>
 
     <div
