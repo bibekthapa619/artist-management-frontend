@@ -1,42 +1,44 @@
 <template>
-  <div class="">
-    <div class="bg-white p-8 rounded shadow-lg w-full max-w-lg">
-      <h1 class="text-3xl font-bold text-center mb-4">
-        Welcome to the Artist Management System
-      </h1>
-      <p class="text-lg text-gray-600 mb-6 text-center">
-        Hello, {{ user?.firstName }}! We're glad to have you here. Manage your
-        artists efficiently and keep track of all their information in one
-        place.
-      </p>
-      <div class="text-center">
-        <button
-          @click="handleLogout"
-          class="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 focus:outline-none focus:ring focus:border-blue-300"
-        >
-          logout
-        </button>
-      </div>
+  <h1 class="text-2xl font-bold mb-4">Dashboard</h1>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+    <div
+      class="bg-white shadow-lg inline-flex flex-col justify-center items-center p-4"
+    >
+      <PieChart title="Users" :data="userData" :height="180" :width="180" />
+    </div>
+    <div
+      class="bg-white shadow-lg inline-flex flex-col justify-center items-center p-4"
+    >
+      <PieChart title="Artists" :data="artistData" :height="180" :width="180" />
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import DashboardLayout from "@/layouts/DashboardLayout.vue";
 import { useUserStore } from "@/store/userStore";
 import { storeToRefs } from "pinia";
-import { clearCookie } from "@/lib/cookies/cookies";
 import { useRouter } from "vue-router";
-import { ref } from "vue";
+import PieChart from "@/components/charts/PieChart.vue";
+import { onMounted, reactive, ref } from "vue";
+import { getMusicStats, getUserStats } from "@/api/dashboard";
+
 const router = useRouter();
-
 const userStore = useUserStore();
-
 const { user, isLoggedIn } = storeToRefs(userStore);
 
-const handleLogout = () => {
-  userStore.clearUser();
-  clearCookie("token");
-  router.push("/login");
-};
+const userData = ref({});
+const artistData = ref({});
+const musicData = ref({});
+
+onMounted(async () => {
+  let res = await getUserStats();
+  userData.value = res.data.user_count;
+  artistData.value = res.data.artist_count;
+});
+
+onMounted(async () => {
+  let res = await getMusicStats();
+  musicData.value = res.data.music_count;
+});
 </script>
