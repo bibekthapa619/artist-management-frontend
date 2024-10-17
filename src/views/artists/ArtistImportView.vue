@@ -116,7 +116,20 @@ const { handleError } = useAxiosErrorHandler(errors);
 
 const handleFileUpload = (event: Event) => {
   const target = event.target as HTMLInputElement;
-  csvFile.value = target.files ? target.files[0] : null;
+  const file = target.files ? target.files[0] : null;
+
+  if (file) {
+    const isCSV = file.type === "text/csv" || file.name.endsWith(".csv");
+
+    if (isCSV) {
+      csvFile.value = file;
+    } else {
+      alert("Please upload a valid CSV file.");
+      csvFile.value = null;
+    }
+  } else {
+    csvFile.value = null;
+  }
 };
 
 const importCSV = async () => {
