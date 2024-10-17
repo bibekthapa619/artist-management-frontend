@@ -130,16 +130,25 @@ const authRoutes = [
         path: "/musics",
         name: "musics.index",
         component: MusicsView,
+        meta: {
+          roles: ["artist"],
+        },
       },
       {
         path: "/musics/create",
         name: "musics.create",
         component: MusicCreateView,
+        meta: {
+          roles: ["artist"],
+        },
       },
       {
         path: "/musics/:id",
         name: "musics.edit",
         component: MusicEditView,
+        meta: {
+          roles: ["artist"],
+        },
       },
       {
         path: "/404",
