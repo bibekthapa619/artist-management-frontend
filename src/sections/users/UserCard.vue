@@ -3,7 +3,7 @@
     <div
       v-for="(user, index) in users"
       :key="user.id"
-      class="bg-white shadow-lg rounded p-6 mb-6 transition-transform transform hover:scale-105 relative"
+      class="bg-white shadow-lg rounded p-6 transition-transform transform hover:scale-105 relative"
     >
       <!-- Card Options -->
       <div

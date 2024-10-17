@@ -3,7 +3,7 @@
     <div
       v-for="(artist, index) in artists"
       :key="artist.id"
-      class="bg-white shadow-lg rounded p-6 mb-6 transition-transform transform hover:scale-105 relative border border-gray-200"
+      class="bg-white shadow-lg rounded p-6 transition-transform transform hover:scale-105 relative border border-gray-200"
     >
       <div
         class="flex justify-between items-center mb-4"
