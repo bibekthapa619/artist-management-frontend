@@ -1,7 +1,7 @@
 <template>
   <div class="">
     <nav class="text-sm mb-4">
-      <router-link to="/users" class="text-primary hover:underline"
+      <router-link to="/artists" class="text-primary hover:underline"
         >Artists</router-link
       >
       <span class="mx-2">/</span>
